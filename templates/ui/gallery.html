@@ -52,27 +52,58 @@
             {% endfor %}
         </div>
 
-     <div class="row mt-4">
-    <div class="col-md-12 text-center pagination">
-        {% if images.has_previous %}
-            <a href="?page={{ images.previous_page_number }}">Previous</a>
-        {% else %}
-            <span class="disabled">Previous</span>
-        {% endif %}
+     <div class="row mt-5 mb-5">
+    <div class="col-md-12 d-flex justify-content-center">
+        <nav aria-label="Gallery pagination">
+            <ul class="pagination pagination-lg">
+                {% if images.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ images.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </span>
+                    </li>
+                {% endif %}
 
-        {% for num in images.paginator.page_range %}
-            {% if images.number == num %}
-                <span class="current">{{ num }}</span>
-            {% else %}
-                <a href="?page={{ num }}">{{ num }}</a>
-            {% endif %}
-        {% endfor %}
+                {% for num in images.paginator.page_range %}
+                    {% if images.number == num %}
+                        <li class="page-item active">
+                            <span class="page-link">
+                                {{ num }}
+                                <span class="sr-only">(current)</span>
+                            </span>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
 
-        {% if images.has_next %}
-            <a href="?page={{ images.next_page_number }}">Next</a>
-        {% else %}
-            <span class="disabled">Next</span>
-        {% endif %}
+                {% if images.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ images.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </span>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
 </div>
 

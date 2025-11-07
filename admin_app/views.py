@@ -131,6 +131,7 @@ def delete_gallery_image(request, id):
 # Dashboard list view
 def about_dashboard(request):
     about_list = AboutUs.objects.all().order_by('-id')
+    
     return render(request, 'dashboard/about/ad_about.html', {'about_list': about_list})
 
 

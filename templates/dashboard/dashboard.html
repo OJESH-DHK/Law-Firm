@@ -1,8 +1,231 @@
 {% extends 'dashboard/admin_base.html' %}
+{% load static %}
+
 {% block title %}Dashboard{% endblock %}
+
 {% block content %}
-<div class="container">
-    <h2>Welcome to the Law Firm Admin Dashboard</h2>
-    <p>Use the sidebar to manage your site’s pages and content.</p>
+<div class="container-fluid">
+    <!-- Welcome Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <div class="avatar-lg rounded-circle bg-primary-subtle p-3">
+                                <i class="fas fa-gavel fa-2x text-primary"></i>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h3 class="mb-1">Welcome back, {{ request.user.username }}!</h3>
+                            <p class="text-muted mb-0">Here's what's happening with your law firm today.</p>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-light" data-bs-toggle="tooltip" title="Refresh Stats">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-4">
+        <!-- Contact Messages -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <div class="avatar rounded-circle bg-info-subtle p-3">
+                                <i class="fas fa-envelope text-info"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h6 class="text-muted mb-1">New Messages</h6>
+                            <h4 class="mb-0">{{ messages_count|default:0 }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Posts -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <div class="avatar rounded-circle bg-success-subtle p-3">
+                                <i class="fas fa-blog text-success"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h6 class="text-muted mb-1">Blog Posts</h6>
+                            <h4 class="mb-0">{{ blog_posts_count|default:0 }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Images -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <div class="avatar rounded-circle bg-warning-subtle p-3">
+                                <i class="fas fa-images text-warning"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h6 class="text-muted mb-1">Gallery Images</h6>
+                            <h4 class="mb-0">{{ gallery_images_count|default:0 }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <div class="avatar rounded-circle bg-primary-subtle p-3">
+                                <i class="fas fa-balance-scale text-primary"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h6 class="text-muted mb-1">Services</h6>
+                            <h4 class="mb-0">{{ services_count|default:0 }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity & Quick Actions -->
+    <div class="row g-4">
+        <!-- Recent Activity -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-transparent border-0">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Recent Activity</h5>
+                        <button class="btn btn-sm btn-light" data-bs-toggle="tooltip" title="View All">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        {% for activity in recent_activities|default:'' %}
+                        <div class="list-group-item border-0 py-3">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="avatar rounded-circle bg-light p-2">
+                                        <i class="fas fa-circle-notch text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <p class="mb-0">{{ activity.description }}</p>
+                                    <small class="text-muted">{{ activity.timestamp }}</small>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="text-center py-4">
+                            <img src="{% static 'images/empty-state.svg' %}" alt="No Activity" class="mb-3" style="height: 120px;">
+                            <p class="text-muted mb-0">No recent activity to show</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-transparent border-0">
+                    <h5 class="mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'ad_contact' %}" class="btn btn-light text-start">
+                            <i class="fas fa-envelope me-2"></i>
+                            View Messages
+                            {% if messages_count > 0 %}
+                            <span class="badge bg-primary rounded-pill float-end">{{ messages_count }}</span>
+                            {% endif %}
+                        </a>
+                        <a href="#" class="btn btn-light text-start">
+                            <i class="fas fa-edit me-2"></i>
+                            New Blog Post
+                        </a>
+                        <a href="{% url 'dashboard_gallery' %}" class="btn btn-light text-start">
+                            <i class="fas fa-image me-2"></i>
+                            Upload Gallery Image
+                        </a>
+                        <a href="{% url 'about_dashboard' %}" class="btn btn-light text-start">
+                            <i class="fas fa-user me-2"></i>
+                            Update About Page
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Status -->
+            <div class="card border-0 shadow-sm rounded-4 mt-4">
+                <div class="card-header bg-transparent border-0">
+                    <h5 class="mb-0">System Status</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">Server Status</h6>
+                        </div>
+                        <div class="flex-shrink-0">
+                            <span class="badge bg-success">Online</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">Last Backup</h6>
+                        </div>
+                        <div class="flex-shrink-0">
+                            <small class="text-muted">Today, 03:45 AM</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tippy.js@6.3.7/dist/tippy-bundle.umd.min.js"></script>
+<script>
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    // Refresh stats button animation
+    document.querySelector('.btn-refresh').addEventListener('click', function() {
+        this.querySelector('i').classList.add('fa-spin');
+        setTimeout(() => {
+            this.querySelector('i').classList.remove('fa-spin');
+        }, 1000);
+    });
+</script>
 {% endblock %}
