@@ -1,0 +1,205 @@
+{% extends 'ui/base.html' %}
+{% load static %}
+
+{% block title %}
+  About | Lawmaker
+{% endblock %}
+
+{% block content %}
+  <aside id="ftco-hero" class="js-fullheight">
+    <div class="flexslider js-fullheight">
+      <ul class="slides">
+        <li style="background-image: url({{ latest_info.image.url }});">
+          <div class="overlay-gradient"></div>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
+                <div class="slider-text-inner">
+                  <h1><strong>{{ latest_info.title }}</strong></h1>
+                  <h2>{{ latest_info.description }}</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <div class="site-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="{{ latest_info.second_image.url }}" alt="Image" class="img-responsive img-rounded" />
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+          <h2>{{ latest_info.second_title }}</h2>
+          <p>{{ latest_info.second_title }}</p>
+          <p>
+            <a href="#" class="btn btn-primary">Read More</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ftco-about">
+    <div class="container">
+      <div class="row animate-box">
+        <div class="col-md-8 col-md-offset-2 text-center ftco-heading">
+          <h2>{{ latest_info.third_title }}</h2>
+          <p>{{ latest_info.third_description }}</p>
+        </div>
+      </div>
+      <div class="row">
+        {% for attorney in attorneys_info %}
+          {% if attorney.attorneys_name %}
+            <div class="col-md-4 col-sm-4 text-center animate-box" data-animate-effect="fadeIn">
+              <div class="ftco-staff">
+                {% for attorney in attorneys_info %}
+                  {% if attorney.attorney_image %}
+                    <img src="/media/{{ attorney.attorney_image }}" alt="{{ attorney.attorneys_name }}" />
+                  {% endif %}
+                {% endfor %}
+
+                <h3>{{ attorney.attorneys_name }}</h3>
+                <strong class="role">{{ attorney.attorney_position }}</strong>
+                <p>{{ attorney.attorney_dsescription }}</p>
+                <ul class="ftco-social-icons">
+                  {% if attorney.facebook_link %}
+                    <li>
+                      <a href="{{ attorney.facebook_link }}"><i class="icon-facebook"></i></a>
+                    </li>
+                  {% endif %}
+                  {% if attorney.twitter_link %}
+                    <li>
+                      <a href="{{ attorney.twitter_link }}"><i class="icon-twitter"></i></a>
+                    </li>
+                  {% endif %}
+                  {% if attorney.linkedin_link %}
+                    <li>
+                      <a href="{{ attorney.linkedin_link }}"><i class="icon-linkedin"></i></a>
+                    </li>
+                  {% endif %}
+                  {% if attorney.instagram_link %}
+                    <li>
+                      <a href="{{ attorney.instagram_link }}"><i class="icon-instagram"></i></a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div id="ftco-testimonial" class="ftco-bg-section">
+    <div class="container">
+      <div class="row animate-box">
+        <div class="col-md-6 col-md-offset-3 text-center ftco-heading">
+          <h2>What are the clients says</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="row animate-box">
+            <div class="owl-carousel owl-carousel-fullwidth">
+              <div class="item">
+                <div class="testimony-slide active text-center">
+                  <figure>
+                    <img src="{% static 'images/user-1.jpg' %}" alt="user" />
+                  </figure>
+                  <span>Carl Smith</span>
+                  <blockquote>
+                    <p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+                  </blockquote>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-slide active text-center">
+                  <figure>
+                    <img src="{% static 'images/user-2.jpg' %}" alt="user" />
+                  </figure>
+                  <span>John Lockwood</span>
+                  <blockquote>
+                    <p>&ldquo;Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+                  </blockquote>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-slide active text-center">
+                  <figure>
+                    <img src="{% static 'images/user-3.jpg' %}" alt="user" />
+                  </figure>
+                  <span>Joyce Kroell</span>
+                  <blockquote>
+                    <p>&ldquo;Far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ftco-practice">
+    <div class="container">
+      <div class="row animate-box">
+        <div class="col-md-8 col-md-offset-2 text-center ftco-heading">
+          <h2>Practice Area</h2>
+          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 text-center animate-box">
+          <div class="services">
+            <span class="icon"><i class="flaticon-courthouse"></i></span>
+            <div class="desc">
+              <h3><a href="#">Real Estate Law</a></h3>
+              <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 text-center animate-box">
+          <div class="services">
+            <span class="icon"><i class="flaticon-padlock"></i></span>
+            <div class="desc">
+              <h3><a href="#">Insurance Law</a></h3>
+              <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 text-center animate-box">
+          <div class="services">
+            <span class="icon"><i class="flaticon-folder"></i></span>
+            <div class="desc">
+              <h3><a href="#">Business Law</a></h3>
+              <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
+            </div>
+          </div>
+        </div>
+        <!-- Repeat other services in similar way -->
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_scripts %}
+  <!-- JS Files -->
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'js/jquery.flexslider-min.js' %}"></script>
+  <script src="{% static 'js/jquery.countTo.js' %}"></script>
+  <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'js/magnific-popup-options.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

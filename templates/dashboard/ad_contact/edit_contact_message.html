@@ -1,0 +1,41 @@
+{% extends 'dashboard/admin_base.html' %}
+{% block title %}Edit Message{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="card shadow-sm rounded-4">
+        <div class="card-header bg-dark text-white rounded-top-4">
+            <h5 class="mb-0 fw-bold">Edit Message</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label>First Name</label>
+                        <input type="text" class="form-control" name="first_name" value="{{ msg.first_name }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" name="last_name" value="{{ msg.last_name }}" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" value="{{ msg.email }}" required>
+                </div>
+                <div class="mb-3">
+                    <label>Subject</label>
+                    <input type="text" class="form-control" name="subject" value="{{ msg.subject }}" required>
+                </div>
+                <div class="mb-3">
+                    <label>Message</label>
+                    <textarea class="form-control" name="message" rows="5" required>{{ msg.message }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-dark">Update Message</button>
+                <a href="{% url 'ad_contact' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

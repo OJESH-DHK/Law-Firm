@@ -1,0 +1,22 @@
+from django.contrib import admin
+from django.urls import path
+from django.urls import include
+from apps.views import *
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('',index, name='index'),
+    path('about/',about, name='about'),
+    path('contact/',contact, name='contact'),
+    path('gallery/',gallery, name='gallery'),
+    path('main/',main, name='main'),
+    path('practice/',practice, name='practice'),
+    path('portfolio/',portfolio, name='portfolio'),
+    path('blog/',blog_main, name='blog_main'),
+    path('blog/<int:id>/',blog_single, name='blog_single'),
+
+
+]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

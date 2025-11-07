@@ -1,0 +1,100 @@
+{% extends 'ui/base.html' %}
+{% load static %}
+
+{% block title %}Gallery | Lawmaker{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<aside id="ftco-hero" class="js-fullheight">
+    <div class="flexslider js-fullheight">
+        <ul class="slides">
+            <li style="background-image: url('{{ gallery.header_image.url }}');">
+                <div class="overlay-gradient"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
+                            <div class="slider-text-inner">
+                                <h1><strong>{{ gallery.title }}</strong></h1>
+                                <h2>{{ gallery.description }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+<!-- Gallery Section -->
+<div class="site-section py-5">
+    <div class="container">
+        <!-- Section Title -->
+        <div class="row mb-5">
+            <div class="col-md-12 text-center">
+                <h2 class="section-title">{{ gallery.title }}</h2>
+                <p class="section-subtitle">{{ gallery.description }}</p>
+            </div>
+        </div>
+
+        <!-- Gallery Images Grid -->
+        <div class="row">
+            {% for img in images %}
+                <div class="col-sm-6 col-md-4 col-lg-4 mb-4">
+                    <div class="gallery-item-wrapper">
+                        <a href="{{ img.image.url }}" class="image-popup">
+                            <img src="{{ img.image.url }}" alt="{{ gallery.title }} Image" class="img-fluid rounded shadow-sm gallery-hover" style="width:100%; height:250px; object-fit:cover;">
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center">No images available in the gallery.</p>
+            {% endfor %}
+        </div>
+
+     <div class="row mt-4">
+    <div class="col-md-12 text-center pagination">
+        {% if images.has_previous %}
+            <a href="?page={{ images.previous_page_number }}">Previous</a>
+        {% else %}
+            <span class="disabled">Previous</span>
+        {% endif %}
+
+        {% for num in images.paginator.page_range %}
+            {% if images.number == num %}
+                <span class="current">{{ num }}</span>
+            {% else %}
+                <a href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if images.has_next %}
+            <a href="?page={{ images.next_page_number }}">Next</a>
+        {% else %}
+            <span class="disabled">Next</span>
+        {% endif %}
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<!-- Intro Section -->
+<div id="intro-bg">
+    <div class="container">
+        <div id="ftco-intro" style="position: relative; margin-bottom: -150px!important;">
+            <div class="third-col">
+                <h2 class="h3">Need Legal Services?</h2>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            </div>
+            <div class="third-col third-col-color">
+                <h2 class="h3">Call now (+1) 123-456-7890</h2>
+                <p>Email us at <a href="#" target="_blank">info@yourwebsite.com</a></p>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

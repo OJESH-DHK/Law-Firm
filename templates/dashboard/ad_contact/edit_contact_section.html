@@ -1,0 +1,38 @@
+{% extends 'dashboard/admin_base.html' %}
+{% block title %}Edit Contact Section{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="card shadow-sm rounded-4">
+        <div class="card-header bg-success text-white rounded-top-4">
+            <h5 class="mb-0 fw-bold">Edit Contact Page Section</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label>Header</label>
+                    <input type="text" class="form-control" name="header" value="{{ contact_section.header }}" required>
+                </div>
+                <div class="mb-3">
+                    <label>Sub Header</label>
+                    <textarea class="form-control" name="sub_header" required>{{ contact_section.sub_header }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label>Map Embed Code (optional)</label>
+                    <textarea class="form-control" name="map_embed_code">{{ contact_section.map_embed_code }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label>Image (optional)</label>
+                    <input type="file" class="form-control" name="image">
+                    {% if contact_section.image %}
+                        <img src="{{ contact_section.image.url }}" alt="Current Image" class="img-fluid mt-2" style="max-width:200px;">
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-success">Update Section</button>
+                <a href="{% url 'ad_contact' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

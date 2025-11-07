@@ -1,0 +1,107 @@
+{% extends 'dashboard/admin_base.html' %}
+{% load static %}
+
+{% block title %}Gallery Management{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!-- Section: Edit Gallery Info -->
+    <div class="card shadow-sm border-0 rounded-4 mb-5">
+        <div class="card-header bg-primary text-white rounded-top-4">
+            <h5 class="mb-0">Edit Gallery Information</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="update_gallery" value="1">
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Title</label>
+                        <input type="text" name="title" value="{{ gallery.title }}" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Header Image</label><br>
+                        {% if gallery.header_image %}
+                            <img src="{{ gallery.header_image.url }}" alt="Header" class="img-fluid rounded mb-2" style="height:100px;object-fit:cover;">
+                        {% endif %}
+                        <input type="file" name="header_image" class="form-control mt-2">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="3">{{ gallery.description }}</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success px-4">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Section: Add New Image -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-bold">Gallery Images</h4>
+        <form method="POST" enctype="multipart/form-data" class="d-flex">
+            {% csrf_token %}
+            <input type="hidden" name="add_image" value="1">
+            <input type="file" name="image" accept="image/*" class="form-control me-2" required>
+            <button type="submit" class="btn btn-primary">Add Image</button>
+        </form>
+    </div>
+
+    <!-- Section: Gallery Grid -->
+    <div class="row">
+        {% for img in images %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm border-0 rounded-4">
+                    <img src="{{ img.image.url }}" class="card-img-top rounded-top-4" 
+                         style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <a href="{% url 'delete_gallery_image' img.id %}" 
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('Are you sure you want to delete this image?')">
+                           Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center">No images in the gallery yet.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="text-center mt-3">
+        <nav aria-label="Gallery pagination">
+            <ul class="pagination justify-content-center">
+                {% if images.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ images.previous_page_number }}">Previous</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                {% endif %}
+
+                {% for num in images.paginator.page_range %}
+                    {% if images.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if images.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ images.next_page_number }}">Next</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Next</span></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+</div>
+{% endblock %}
