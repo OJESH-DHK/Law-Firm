@@ -1,0 +1,78 @@
+{% extends 'ui/base.html' %}
+{% load static %}
+
+{% block title %}{{ area.name }} | Lawmaker{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<aside id="ftco-hero" class="js-fullheight">
+    <div class="flexslider js-fullheight">
+        <ul class="slides">
+            <li style="background-image: url('{{ area.icon_image.url }}');">
+                <div class="overlay-gradient"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
+                            <div class="slider-text-inner">
+                                <h1><strong>{{ area.name }}</strong></h1>
+                                <p>{{ area.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+<!-- Detailed Content Section -->
+<section class="ftco-section ftco-practice-detail">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-10 text-center heading-section">
+                <h2>{{ area.name }}</h2>
+                {% if area.detailed_description %}
+                <p>{{ area.detailed_description }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ area.icon_image.url }}" alt="{{ area.name }}" class="img-fluid rounded mb-4" style="object-fit:cover;">
+            </div>
+            <div class="col-md-6">
+                <h3>About this Practice Area</h3>
+                <p>{{ area.description }}</p>
+                {% if area.detailed_description %}
+                <p>{{ area.detailed_description }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Related Services -->
+        <div class="row mt-5">
+            <div class="col-md-12 text-center mb-4">
+                <h3>Other Practice Areas</h3>
+            </div>
+            {% for other in areas %}
+                {% if other.id != area.id %}
+                <div class="col-md-4 text-center animate-box">
+                    <div class="services">
+                        <span class="icon">
+                            <img src="{{ other.icon_image.url }}" alt="{{ other.name }}" style="width:80px; height:80px; object-fit:cover;">
+                        </span>
+                        <div class="desc">
+                            <h3>{{ other.name }}</h3>
+                            <p>{{ other.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -6,6 +6,13 @@ admin.site.register(ContactInfo)
 admin.site.register(Contact)
 admin.site.register(ContactMessage)
 admin.site.register(AboutUs)
+admin.site.register(Client)
+admin.site.register(PracticeArea)
+admin.site.register(PortfolioMain)
+admin.site.register(PortfolioItem)
+admin.site.register(Blog)
+admin.site.register(BlogPost)
+admin.site.register(Author)
 
 
 

@@ -1,0 +1,66 @@
+{% extends 'ui/base.html' %}
+{% load static %}
+
+{% block title %}{{ item.item_title }} | Lawmaker{% endblock %}
+
+{% block content %}
+
+<!-- Hero / Banner Section -->
+<aside id="ftco-hero" class="js-fullheight">
+    <div class="flexslider js-fullheight">
+        <ul class="slides">
+            <li style="background-image: url('{{ item.item_image.url }}');">
+                <div class="overlay-gradient"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
+                            <div class="slider-text-inner">
+                                <h1><strong>{{ item.item_title }}</strong></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+<!-- Portfolio Item Details -->
+<div class="site-section">
+    <div class="container">
+        <div class="row animate-box">
+            <div class="col-md-8 col-md-offset-2 text-center">
+                <div class="services">
+                    <div class="desc">
+                        <p>{{ item.item_description }}</p>
+                        <strong>Result: Case won</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Portfolio Items -->
+        {% if other_items %}
+        <div class="row mt-5">
+            <div class="col-md-12 text-center ftco-heading">
+                <h2>Related Cases</h2>
+            </div>
+            {% for other in other_items %}
+            <div class="col-md-4 text-center animate-box">
+                <div class="services">
+                    <div class="desc">
+                        <h3>
+                            <a href="{% url 'portfolio-detail' other.id %}">{{ other.item_title }}</a>
+                        </h3>
+                        <p>{{ other.item_description|truncatewords:20 }}</p>
+                        <strong>Result: Case won</strong>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

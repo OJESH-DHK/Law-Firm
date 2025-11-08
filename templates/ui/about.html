@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block content %}
+  <!-- HERO SECTION -->
   <aside id="ftco-hero" class="js-fullheight">
     <div class="flexslider js-fullheight">
       <ul class="slides">
@@ -26,6 +27,7 @@
     </div>
   </aside>
 
+  <!-- SECOND SECTION -->
   <div class="site-section">
     <div class="container">
       <div class="row">
@@ -35,15 +37,14 @@
         <div class="col-md-1"></div>
         <div class="col-md-5">
           <h2>{{ latest_info.second_title }}</h2>
-          <p>{{ latest_info.second_title }}</p>
-          <p>
-            <a href="#" class="btn btn-primary">Read More</a>
-          </p>
+          <p>{{ latest_info.second_description }}</p>
+          <p><a href="#" class="btn btn-primary">Read More</a></p>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- ATTORNEYS SECTION -->
   <div id="ftco-about">
     <div class="container">
       <div class="row animate-box">
@@ -57,35 +58,24 @@
           {% if attorney.attorneys_name %}
             <div class="col-md-4 col-sm-4 text-center animate-box" data-animate-effect="fadeIn">
               <div class="ftco-staff">
-                {% for attorney in attorneys_info %}
-                  {% if attorney.attorney_image %}
-                    <img src="/media/{{ attorney.attorney_image }}" alt="{{ attorney.attorneys_name }}" />
-                  {% endif %}
-                {% endfor %}
-
+                {% if attorney.attorney_image %}
+                  <img src="/media/{{ attorney.attorney_image }}" alt="{{ attorney.attorneys_name }}" />
+                {% endif %}
                 <h3>{{ attorney.attorneys_name }}</h3>
                 <strong class="role">{{ attorney.attorney_position }}</strong>
                 <p>{{ attorney.attorney_dsescription }}</p>
                 <ul class="ftco-social-icons">
                   {% if attorney.facebook_link %}
-                    <li>
-                      <a href="{{ attorney.facebook_link }}"><i class="icon-facebook"></i></a>
-                    </li>
+                    <li><a href="{{ attorney.facebook_link }}"><i class="icon-facebook"></i></a></li>
                   {% endif %}
                   {% if attorney.twitter_link %}
-                    <li>
-                      <a href="{{ attorney.twitter_link }}"><i class="icon-twitter"></i></a>
-                    </li>
+                    <li><a href="{{ attorney.twitter_link }}"><i class="icon-twitter"></i></a></li>
                   {% endif %}
                   {% if attorney.linkedin_link %}
-                    <li>
-                      <a href="{{ attorney.linkedin_link }}"><i class="icon-linkedin"></i></a>
-                    </li>
+                    <li><a href="{{ attorney.linkedin_link }}"><i class="icon-linkedin"></i></a></li>
                   {% endif %}
                   {% if attorney.instagram_link %}
-                    <li>
-                      <a href="{{ attorney.instagram_link }}"><i class="icon-instagram"></i></a>
-                    </li>
+                    <li><a href="{{ attorney.instagram_link }}"><i class="icon-instagram"></i></a></li>
                   {% endif %}
                 </ul>
               </div>
@@ -96,94 +86,73 @@
     </div>
   </div>
 
+  <!-- ✅ CLIENT TESTIMONIAL SECTION -->
   <div id="ftco-testimonial" class="ftco-bg-section">
     <div class="container">
       <div class="row animate-box">
         <div class="col-md-6 col-md-offset-3 text-center ftco-heading">
-          <h2>What are the clients says</h2>
+          <h2>{{ latest_client.title }}</h2>
         </div>
       </div>
+
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <div class="row animate-box">
             <div class="owl-carousel owl-carousel-fullwidth">
-              <div class="item">
-                <div class="testimony-slide active text-center">
-                  <figure>
-                    <img src="{% static 'images/user-1.jpg' %}" alt="user" />
-                  </figure>
-                  <span>Carl Smith</span>
-                  <blockquote>
-                    <p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-                  </blockquote>
+              {% for client in clients %}
+                <div class="item">
+                  <div class="testimony-slide text-center">
+                    <figure>
+                      
+                        <img src="{{ client.client_image.url }}" alt="{{ client.client_name }}" class="img-fluid rounded-circle" style="width:120px; height:120px; object-fit:cover;">
+                     
+                        <img src="{% static 'images/default-user.jpg' %}" alt="User" class="img-fluid rounded-circle" style="width:120px; height:120px; object-fit:cover;">
+                     
+                    </figure>
+                    <span>{{ client.client_name }}</span>
+                    <blockquote>
+                      <p>&ldquo;{{ client.client_message|default:'No message provided.' }}&rdquo;</p>
+                    </blockquote>
+                  </div>
                 </div>
-              </div>
-              <div class="item">
-                <div class="testimony-slide active text-center">
-                  <figure>
-                    <img src="{% static 'images/user-2.jpg' %}" alt="user" />
-                  </figure>
-                  <span>John Lockwood</span>
-                  <blockquote>
-                    <p>&ldquo;Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-                  </blockquote>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-slide active text-center">
-                  <figure>
-                    <img src="{% static 'images/user-3.jpg' %}" alt="user" />
-                  </figure>
-                  <span>Joyce Kroell</span>
-                  <blockquote>
-                    <p>&ldquo;Far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-                  </blockquote>
-                </div>
-              </div>
+              {% empty %}
+                <p class="text-center text-muted">No client testimonials available.</p>
+              {% endfor %}
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <!-- ✅ END CLIENT TESTIMONIAL SECTION -->
 
+  <!-- PRACTICE AREA SECTION -->
   <div id="ftco-practice">
     <div class="container">
       <div class="row animate-box">
         <div class="col-md-8 col-md-offset-2 text-center ftco-heading">
-          <h2>Practice Area</h2>
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+          <h2>{{ latest_client.practice_area }}</h2>
+          <p>{{ latest_client.practice_area_description }}</p>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 text-center animate-box">
-          <div class="services">
-            <span class="icon"><i class="flaticon-courthouse"></i></span>
-            <div class="desc">
-              <h3><a href="#">Real Estate Law</a></h3>
-              <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-            </div>
-          </div>
+           {% for area in areas %}
+    <div class="col-md-4 text-center animate-box">
+        <div class="services">
+            <a href="{% url 'practice-area-detail' area.id %}">
+                <span class="icon">
+                    <img src="{{ area.icon_image.url }}" alt="{{ area.name }}" style="width:80px; height:80px; object-fit:cover;">
+                </span>
+                <div class="desc">
+                    <h3>{{ area.name }}</h3>
+                    <p>{{ area.description }}</p>
+                </div>
+            </a>
         </div>
-        <div class="col-md-4 text-center animate-box">
-          <div class="services">
-            <span class="icon"><i class="flaticon-padlock"></i></span>
-            <div class="desc">
-              <h3><a href="#">Insurance Law</a></h3>
-              <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 text-center animate-box">
-          <div class="services">
-            <span class="icon"><i class="flaticon-folder"></i></span>
-            <div class="desc">
-              <h3><a href="#">Business Law</a></h3>
-              <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-            </div>
-          </div>
-        </div>
-        <!-- Repeat other services in similar way -->
+    </div>
+    {% endfor %}
+        
+        
       </div>
     </div>
   </div>

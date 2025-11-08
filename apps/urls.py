@@ -14,8 +14,8 @@ urlpatterns = [
     path('practice/',practice, name='practice'),
     path('portfolio/',portfolio, name='portfolio'),
     path('blog/',blog_main, name='blog_main'),
-    path('blog/<int:id>/',blog_single, name='blog_single'),
-
+    path('blog/<int:id>/', blog_single, name='blog_single'),
+    path('portfolio/<int:id>/', portfolio_detail, name='portfolio-detail'),
 
 ]
 if settings.DEBUG:
