@@ -144,6 +144,100 @@ def admin_delete_about(request, id):
     return redirect('about_dashboard')
 
 
+#admin portfolio view
+def admin_portfolio(request):
+
+    portfolio_main = PortfolioMain.objects.last()
+    
+
+    portfolio_items_list = PortfolioItem.objects.all()
+    paginator = Paginator(portfolio_items_list, 10)  # 10 per page
+    page_number = request.GET.get('page')
+    portfolio_items = paginator.get_page(page_number)
+
+
+    clients = Client.objects.all()
+
+    context = {
+        'portfolio_main': portfolio_main,
+        'portfolio_items': portfolio_items,
+        'clients': clients
+    }
+    return render(request, 'dashboard/portfolio/admin_portfolio.html', context)
+
+
+
+def admin_edit_portfolio_main(request, id):
+    portfolio_main = get_object_or_404(PortfolioMain, id=id)
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        image = request.FILES.get('image')
+
+        portfolio_main.title = title
+        portfolio_main.description = description
+
+        if image:
+            portfolio_main.image = image
+
+        portfolio_main.save()
+        messages.success(request, 'Portfolio Main updated successfully!')
+        return redirect('admin_portfolio')  
+
+    context = {
+        'portfolio_main': portfolio_main
+    }
+    return render(request, 'dashboard/portfolio/admin_edit_portfolio_main.html', context)
+
+def admin_edit_client(request, id):
+    client = get_object_or_404(Client, id=id)
+
+    if request.method == 'POST':
+        client.client_name = request.POST.get('name')
+        client.client_message = request.POST.get('message')
+
+        if request.FILES.get('image'):
+            client.client_image = request.FILES.get('image')
+
+        client.save()
+        messages.success(request, "Client updated successfully!")
+        return redirect('admin_portfolio')
+
+    context = {
+        'client': client
+    }
+    return render(request, 'dashboard/portfolio/admin_edit_client.html', context)
+
+def admin_delete_client(request, id):
+    client = get_object_or_404(Client, id=id)
+    client.delete()
+    messages.success(request, "Client deleted successfully!")
+    return redirect('admin_portfolio')
+
+def admin_add_client(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        message = request.POST.get('message')
+        image = request.FILES.get('image')
+
+        Client.objects.create(
+            client_name=name,
+            client_message=message,
+            client_image=image
+        )
+        messages.success(request, 'Client added successfully!')
+        return redirect('admin_portfolio')
+
+    return render(request, 'dashboard/portfolio/admin_add_client.html')
+
+
+
+
+
+
+
+
 
 
 

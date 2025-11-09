@@ -1,0 +1,25 @@
+{% extends 'dashboard/admin_base.html' %}
+{% block title %}Add Portfolio Item | Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mb-4">Add Portfolio Item</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" name="title" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control" rows="4" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Image</label>
+            <input type="file" name="image" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Add Item</button>
+        <a href="#" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

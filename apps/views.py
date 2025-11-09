@@ -174,13 +174,15 @@ def practice(request):
 
 def practice_area_detail(request, id):
     area = get_object_or_404(PracticeArea, id=id)
-    areas = PracticeArea.objects.all()  # fetch all practice areas
+    all_areas = PracticeArea.objects.all()
+    other_areas = PracticeArea.objects.exclude(id=area.id).order_by('-id')[:3]
 
     context = {
         'area': area,
-        'areas': areas  # pass to template for "Other Practice Areas"
+        'other_areas': other_areas,  
     }
     return render(request, 'ui/practice_area_detail.html', context)
+
 
 
 

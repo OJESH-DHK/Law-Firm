@@ -525,7 +525,7 @@
                     <span>Blog</span>
                     <span class="badge rounded-pill bg-success ms-auto">3</span>
                 </a>
-                <a href="#" class="{% if 'portfolio' in request.path %}active{% endif %}">
+                <a href="{% url 'admin_portfolio' %}" class="{% if 'portfolio' in request.path %}active{% endif %}">
                     <i class="fas fa-briefcase"></i>
                     <span>Portfolio</span>
                 </a>
@@ -546,21 +546,11 @@
                     <span class="badge rounded-pill bg-danger ms-auto">{{ messages_count }}</span>
                     {% endif %}
                 </a>
-                <a href="#" class="{% if 'settings' in request.path %}active{% endif %}">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </a>
+
             </div>
 
             <div class="menu-section mt-auto">
-                <div class="menu-section-title">
-                    <i class="fas fa-info-circle me-2"></i>System
-                </div>
-                <a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Check system status">
-                    <i class="fas fa-server"></i>
-                    <span>Status</span>
-                    <span class="status-dot bg-success ms-auto"></span>
-                </a>
+               
                 <a href="#" class="text-danger" onclick="return confirm('Are you sure you want to logout?');">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>

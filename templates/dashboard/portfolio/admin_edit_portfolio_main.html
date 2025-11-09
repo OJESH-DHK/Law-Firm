@@ -1,0 +1,38 @@
+{% extends 'dashboard/admin_base.html' %}
+{% load static %}
+
+{% block title %}Edit Portfolio Main | Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mb-4">Edit Portfolio Main</h1>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" id="title" name="title" class="form-control" value="{{ portfolio_main.title }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea id="description" name="description" class="form-control" rows="4" required>{{ portfolio_main.description }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image</label>
+                    <input type="file" id="image" name="image" class="form-control">
+                    {% if portfolio_main.image %}
+                        <img src="{{ portfolio_main.image.url }}" alt="Portfolio Main Image" class="img-fluid mt-2" style="max-height: 200px;">
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a href="{% url 'admin_portfolio' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'dashboard/admin_base.html' %}
+{% load static %}
+
+{% block title %}Edit Client | Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mb-4">Edit Client</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Client Name</label>
+            <input type="text" name="name" class="form-control" id="name" value="{{ client.client_name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea name="message" class="form-control" id="message" rows="4" required>{{ client.client_message }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Client Image</label>
+            <input type="file" name="image" class="form-control" id="image">
+            {% if client.client_image %}
+                <img src="{{ client.client_image.url }}" alt="{{ client.client_name }}" class="mt-2" style="width:100px; height:100px; object-fit:cover;">
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Update Client</button>
+        <a href="{% url 'admin_portfolio' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
