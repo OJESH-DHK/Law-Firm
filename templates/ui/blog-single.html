@@ -33,8 +33,32 @@
 <div id="ftco-blog">
   <div class="container">
     <div class="row">
+      <!-- Main Content -->
       <div class="col-md-8 blog-content">
         <p class="lead">{{ post.content }}</p>
+
+        <!-- Related Blogs -->
+        {% if related_blogs %}
+        <div class="mt-5">
+          <h3 class="mb-4">Related Blogs</h3>
+          <div class="row">
+            {% for blog in related_blogs %}
+              <div class="col-md-4 text-center animate-box mb-3">
+                <div class="services p-3 shadow-sm rounded-4">
+                  {% if blog.image %}
+                    <img src="{{ blog.image.url }}" class="img-fluid rounded mb-2" style="height:150px; object-fit:cover;">
+                  {% else %}
+                    <img src="{% static 'images/blog_placeholder.jpg' %}" class="img-fluid rounded mb-2" style="height:150px; object-fit:cover;">
+                  {% endif %}
+                  <h4><a href="{% url 'blog_single' blog.id %}">{{ blog.title|truncatewords:8 }}</a></h4>
+                  
+                  <a href="{% url 'blog_single' blog.id %}" class="btn btn-sm btn-primary mt-1">Read More</a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
 
         <!-- Comments Section -->
         <div class="pt-5">
@@ -83,7 +107,8 @@
 
       <!-- Sidebar -->
       <div class="col-md-4 sidebar">
-        <div class="sidebar-box">
+        <!-- Author Info -->
+        <div class="sidebar-box mb-4">
           {% if post.author.profile_image %}
             <p><img src="{{ post.author.profile_image.url }}" alt="{{ post.author.name }}" class="img-responsive img-rounded"></p>
           {% else %}
@@ -91,6 +116,17 @@
           {% endif %}
           <h3 class="text-black">About {{ post.author.name }}</h3>
           <p>{{ post.author.bio|default:"No biography available for this author." }}</p>
+        </div>
+
+        <!-- Recent Blogs -->
+        <div class="sidebar-box">
+          <h3>Recent Blogs</h3>
+          {% for recent in recent_blogs %}
+            <div class="recent-blog-item mb-3">
+              <h5><a href="{% url 'blog_single' recent.id %}">{{ recent.title|truncatewords:6 }}</a></h5>
+              <span class="text-muted" style="font-size: 13px;">{{ recent.created_at|date:"F d, Y" }}</span>
+            </div>
+          {% endfor %}
         </div>
       </div>
     </div>

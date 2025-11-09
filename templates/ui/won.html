@@ -1,11 +1,11 @@
 {% extends 'ui/base.html' %}
 {% load static %}
 
-{% block title %}Won Cases | Lawmaker{% endblock %}
+{% block title %}Our Portfolio | Lawmaker{% endblock %}
 
 {% block content %}
 
-<!-- Hero / Banner Section -->
+<!-- Hero Section -->
 <aside id="ftco-hero" class="js-fullheight">
     <div class="flexslider js-fullheight">
         <ul class="slides">
@@ -26,102 +26,120 @@
     </div>
 </aside>
 
-<!-- Portfolio Items -->
+<!-- Portfolio Section -->
 <div id="ftco-practice" class="site-section">
     <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-md-8 col-md-offset-2 ftco-heading">
+                <h2 class="h1">Our Recent Cases</h2>
+                <p class="text-muted">Explore some of our successfully handled cases and legal achievements.</p>
+            </div>
+        </div>
+
         <div class="row">
             {% for item in portfolio_items %}
-            <div class="col-md-4 text-center animate-box">
-                <div class="services">
-                    <div class="desc">
-                        <h3>
-                            <!-- Clickable title linking to detail page -->
-                            <a href="{% url 'portfolio-detail' item.id %}">{{ item.item_title }}</a>
-                        </h3>
-                        <p>{{ item.item_description|truncatewords:20 }}</p>
-                        <strong>Result: Case won</strong>
+            <div class="col-md-4 col-sm-6 mb-4 d-flex align-items-stretch">
+                <div class="card border-0 shadow-sm w-100" style="border-radius: 12px; overflow: hidden;">
+                    {% if item.item_image %}
+                    <div class="card-img-top" style="height: 220px; background: url('{{ item.item_image.url }}') center/cover;"></div>
+                    {% else %}
+                    <div class="card-img-top" style="height: 220px; background: #f8f9fa;"></div>
+                    {% endif %}
+                    <div class="card-body d-flex flex-column p-4">
+                        <h5 class="card-title mb-3" style="font-weight: 600;">{{ item.item_title }}</h5>
+                        <p class="card-text text-muted flex-grow-1">
+                            {{ item.item_description|truncatewords:20 }}
+                        </p>
+                        <div class="mt-3 text-start">
+                            <a href="{% url 'portfolio-detail' item.id %}" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                                Read More →
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
             {% empty %}
-            <p>No portfolio items found.</p>
+            <p class="text-center">No portfolio items available right now.</p>
             {% endfor %}
         </div>
 
         <!-- Pagination -->
-        <div class="row">
-            <div class="col-md-12 pagination text-center">
+        <div class="row mt-4">
+            <div class="col text-center">
                 {% if portfolio_items.has_previous %}
-                    <a href="?page={{ portfolio_items.previous_page_number }}">Previous</a>
+                    <a href="?page={{ portfolio_items.previous_page_number }}" class="btn btn-outline-primary btn-sm mx-1">Previous</a>
                 {% endif %}
-
                 {% for num in portfolio_items.paginator.page_range %}
                     {% if portfolio_items.number == num %}
-                        <span class="current">{{ num }}</span>
+                        <span class="btn btn-primary btn-sm mx-1 disabled">{{ num }}</span>
                     {% else %}
-                        <a href="?page={{ num }}">{{ num }}</a>
+                        <a href="?page={{ num }}" class="btn btn-outline-primary btn-sm mx-1">{{ num }}</a>
                     {% endif %}
                 {% endfor %}
-
                 {% if portfolio_items.has_next %}
-                    <a href="?page={{ portfolio_items.next_page_number }}">Next</a>
+                    <a href="?page={{ portfolio_items.next_page_number }}" class="btn btn-outline-primary btn-sm mx-1">Next</a>
                 {% endif %}
             </div>
         </div>
     </div>
 </div>
 
-<!-- Testimonial Section -->
-<div id="ftco-testimonial" class="ftco-bg-section">
-    <div class="container">
-        <div class="row animate-box">
-            <div class="col-md-6 col-md-offset-3 text-center ftco-heading">
-                <h2>What the clients say</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row animate-box">
-                    <div class="owl-carousel owl-carousel-fullwidth">
-                        <div class="item">
-                            <div class="testimony-slide active text-center">
-                                <figure>
-                                    <img src="images/user-1.jpg" alt="user">
-                                </figure>
-                                <span>Carl Smith</span>
-                                <blockquote>
-                                    <p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.&rdquo;</p>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimony-slide active text-center">
-                                <figure>
-                                    <img src="images/user-2.jpg" alt="user">
-                                </figure>
-                                <span>John Lockwood</span>
-                                <blockquote>
-                                    <p>&ldquo;Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimony-slide active text-center">
-                                <figure>
-                                    <img src="images/user-3.jpg" alt="user">
-                                </figure>
-                                <span>Joyce Kroell</span>
-                                <blockquote>
-                                    <p>&ldquo;Far from the countries Vokalia and Consonantia, there live the blind texts.&rdquo;</p>
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- ✅ CLIENT TESTIMONIAL SECTION (Aligned with main container) -->
+<div id="ftco-testimonial" class="site-section">
+  <div class="container">
+    <!-- Section Title -->
+    <div class="row animate-box mb-5">
+      <div class="col-md-8 col-md-offset-2 text-center ftco-heading">
+        <h2 class="fw-bold text-uppercase mb-3">{{ latest_client.title }}</h2>
+        <p class="text-muted">What our clients say about working with us.</p>
+      </div>
     </div>
+
+    <!-- Testimonial Carousel -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="owl-carousel owl-carousel-fullwidth">
+          {% for client in clients %}
+            <div class="item">
+              <div class="testimony-slide text-center p-4 rounded-4 shadow-sm mx-2" style="background: #fff; border: 1px solid #eee; min-height: 320px;">
+                <figure class="mb-3">
+                  {% if client.client_image %}
+                    <img src="{{ client.client_image.url }}" alt="{{ client.client_name }}"
+                         class="img-fluid rounded-circle shadow-sm border"
+                         style="width:120px; height:120px; object-fit:cover;">
+                  {% else %}
+                    <img src="{% static 'images/default-user.jpg' %}" alt="User"
+                         class="img-fluid rounded-circle shadow-sm border"
+                         style="width:120px; height:120px; object-fit:cover;">
+                  {% endif %}
+                </figure>
+
+                <h5 class="fw-semibold mt-3 mb-1">{{ client.client_name }}</h5>
+                <div class="text-warning mb-2">
+                  <i class="icon-star"></i>
+                  <i class="icon-star"></i>
+                  <i class="icon-star"></i>
+                  <i class="icon-star"></i>
+                  <i class="icon-star-half-full"></i>
+                </div>
+
+                <blockquote class="blockquote mb-0">
+                  <p class="text-muted fst-italic" style="font-size: 15px; line-height: 1.6;">
+                    &ldquo;{{ client.client_message|default:'No message provided.' }}&rdquo;
+                  </p>
+                </blockquote>
+              </div>
+            </div>
+          {% empty %}
+            <p class="text-center text-muted">No client testimonials available.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<!-- ✅ END CLIENT TESTIMONIAL SECTION -->
+
 
 <!-- CTA Section -->
 <div id="intro-bg">
@@ -129,12 +147,11 @@
         <div id="ftco-intro" style="position: relative; margin-bottom: -150px!important;">
             <div class="third-col">
                 <h2 class="h3">Need Legal Services?</h2>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                <p>Our experienced lawyers are ready to assist with dedication and integrity.</p>
             </div>
             <div class="third-col third-col-color">
-                <h2 class="h3">Call now (+1) 123-456-7890</h2>
-                <p>Email us at <a href="#" target="_blank">info@yourwebsite.com</a></p>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                <h2 class="h3">Call now (+977) 9800000000</h2>
+                <p>Email: <a href="mailto:info@lawmaker.com">info@lawmaker.com</a></p>
             </div>
         </div>
     </div>

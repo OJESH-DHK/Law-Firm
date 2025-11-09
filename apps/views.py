@@ -35,15 +35,21 @@ def about(request):
 
 
 #main blog view 
+
 def blog_main(request):
     blog = Blog.objects.last()
-    blog_content=BlogPost.objects.all()
+    blog_posts_list = BlogPost.objects.all().order_by('-created_at')
+    paginator = Paginator(blog_posts_list, 6)
+    page_number = request.GET.get('page')
+    blog_content = paginator.get_page(page_number)
+
     context = {
         'blog': blog,
         'blog_content': blog_content
     }
 
     return render(request, 'ui/blog.html', context)
+
 
 
 
@@ -65,13 +71,22 @@ def blog_single(request, id):
             website=website,
             message=message
         )
-        return redirect('blog_single', id=post.id)  # redirect to refresh page
+        return redirect('blog_single', id=post.id) 
+
+    # Related blogs: 3 blogs excluding current post
+    related_blogs = BlogPost.objects.exclude(id=post.id).order_by('-created_at')[:3]
+
+    # Recent blogs: last 3 posts
+    recent_blogs = BlogPost.objects.exclude(id=post.id).order_by('-created_at')[:3]
 
     context = {
         'post': post,
         'comments': comments,
+        'related_blogs': related_blogs,
+        'recent_blogs': recent_blogs
     }
     return render(request, 'ui/blog-single.html', context)
+
 
 
 
@@ -129,11 +144,12 @@ def main(request):
     return render(request, 'ui/main.html')
 
 #practice page view
+from django.core.paginator import Paginator
+
 def practice(request):
     latest_area = PracticeArea.objects.last() 
     
     if latest_area:
-        # Only main section fields
         main_data = {
             'main_title': latest_area.main_title,
             'main_description': latest_area.main_description,
@@ -144,15 +160,17 @@ def practice(request):
     else:
         main_data = None
 
-    # Fetch all practice area entries for dynamic display
-    all_areas = PracticeArea.objects.all()
+    all_areas_list = PracticeArea.objects.all()
+    paginator = Paginator(all_areas_list, 6)  # 6 cards per page
+    page_number = request.GET.get('page')
+    areas = paginator.get_page(page_number)
 
     return render(request, 'ui/practice.html', {
         'main': main_data,
-        'areas': all_areas
+        'areas': areas
     })
-from django.shortcuts import render, get_object_or_404
-from .models import PracticeArea
+
+
 
 def practice_area_detail(request, id):
     area = get_object_or_404(PracticeArea, id=id)
@@ -172,6 +190,7 @@ def practice_area_detail(request, id):
 def portfolio(request):
     portfolio_main = PortfolioMain.objects.last()
     portfolio_items_list = PortfolioItem.objects.all()
+    clients = Client.objects.all() 
 
     # Paginate: 6 items per page (change as needed)
     paginator = Paginator(portfolio_items_list, 6)
@@ -180,7 +199,8 @@ def portfolio(request):
 
     context = {
         'portfolio_main': portfolio_main,
-        'portfolio_items': portfolio_items
+        'portfolio_items': portfolio_items,
+        'clients': clients
     }
     return render(request, 'ui/won.html', context)
 
