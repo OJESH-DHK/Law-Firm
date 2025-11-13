@@ -1,0 +1,47 @@
+{% extends 'dashboard/admin_base.html' %}
+{% load static %}
+
+{% block title %}About Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+
+    <!-- About Us Entries Table -->
+    <h2 class="mb-4">About Us Entries</h2>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Second Title</th>
+                <th>Second Description</th>
+                <th>Third Title</th>
+                <th>Third Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for about in about_entries %}
+            <tr>
+                <td>{{ about.id }}</td>
+                <td>{{ about.title }}</td>
+                <td>{{ about.description|truncatechars:50 }}</td>
+                <td>{{ about.second_title }}</td>
+                <td>{{ about.second_description|truncatechars:50 }}</td>
+                <td>{{ about.third_title }}</td>
+                <td>{{ about.third_description|truncatechars:50 }}</td>
+                <td>
+                    <a href="{% url 'edit_about' about.id %}" class="btn btn-sm btn-primary">Edit</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" class="text-center text-muted">No About entries found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+  
+{% endblock %}

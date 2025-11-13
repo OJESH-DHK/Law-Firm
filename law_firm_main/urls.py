@@ -17,9 +17,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from admin_app.views import login_view, logout_view, change_password
+from django.conf.urls import handler404
+from django.shortcuts import render
+
+def custom_page_not_found(request, exception):
+    return render(request, '404.html', status=404)
+
+handler404 = custom_page_not_found
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.urls')),
     path('dashboard/', include('admin_app.urls')),
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
+    path('change-password/', change_password, name='change_password'),
 ]

@@ -1,0 +1,66 @@
+{% extends 'dashboard/admin_base.html' %}
+{% load static %}
+{% block title %}Practice Area Dashboard{% endblock %}
+
+{% block content %}
+<h2>Edit Main Practice Area Section</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label>Main Title</label>
+        <input type="text" name="main_title" class="form-control" value="{{ practice_area.main_title }}">
+    </div>
+    <div class="mb-3">
+        <label>Main Description</label>
+        <textarea name="main_description" class="form-control">{{ practice_area.main_description }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label>Category Title</label>
+        <input type="text" name="practice_area" class="form-control" value="{{ practice_area.practice_area }}">
+    </div>
+    <div class="mb-3">
+        <label>Category Description</label>
+        <textarea name="practice_area_description" class="form-control">{{ practice_area.practice_area_description }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label>Main Image</label>
+        <input type="file" name="main_image" class="form-control">
+        {% if practice_area.main_image %}
+            <img src="{{ practice_area.main_image.url }}" width="150" class="mt-2">
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-success">Update Main Section</button>
+</form>
+
+<hr>
+<h2>Manage Services</h2>
+<a href="{% url 'add_service' %}" class="btn btn-primary mb-3">Add New Service</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Icon</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for service in services %}
+        <tr>
+            <td>{{ service.name }}</td>
+            <td>{{ service.description|truncatewords:15|safe }}</td>
+            <td>
+                {% if service.icon_image %}
+                    <img src="{{ service.icon_image.url }}" width="50">
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'edit_service' service.id %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'delete_service' service.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

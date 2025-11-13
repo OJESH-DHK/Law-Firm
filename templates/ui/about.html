@@ -38,53 +38,131 @@
         <div class="col-md-5">
           <h2>{{ latest_info.second_title }}</h2>
           <p>{{ latest_info.second_description }}</p>
-          <p><a href="#" class="btn btn-primary">Read More</a></p>
+       
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ATTORNEYS SECTION -->
-  <div id="ftco-about">
-    <div class="container">
-      <div class="row animate-box">
-        <div class="col-md-8 col-md-offset-2 text-center ftco-heading">
-          <h2>{{ latest_info.third_title }}</h2>
-          <p>{{ latest_info.third_description }}</p>
+<!-- ATTORNEYS SECTION -->
+<div id="ftco-about">
+  <div class="container">
+    <div class="row animate-box">
+      <div class="col-md-8 col-md-offset-2 text-center ftco-heading">
+        <h2>{{ latest_info.third_title }}</h2>
+        <p>{{ latest_info.third_description }}</p>
+      </div>
+    </div>
+<div class="row justify-content-center">
+  {% if attorneys|length == 1 %}
+    {% for attorney in attorneys %}
+      <div class="col-12 d-flex justify-content-center animate-box" data-animate-effect="fadeIn">
+        <div class="ftco-staff text-center shadow-sm p-4 rounded-4 bg-white" style="max-width: 420px; width:100%;">
+          {% if attorney.image %}
+            <img src="{{ attorney.image.url }}" alt="{{ attorney.name }}" class="img-fluid rounded mb-3" loading="lazy" style="width:220px;height:220px;object-fit:cover;" />
+          {% else %}
+            <img src="{% static 'images/default-user.jpg' %}" alt="Default Attorney" class="img-fluid rounded mb-3" loading="lazy" style="width:220px;height:220px;object-fit:cover;" />
+          {% endif %}
+          <h3 class="mb-1">{{ attorney.name }}</h3>
+          <strong class="role text-muted d-block mb-2">{{ attorney.position }}</strong>
+          <p class="text-muted">{{ attorney.description }}</p>
+          <ul class="ftco-social-icons d-flex justify-content-center gap-2 list-unstyled mt-3 mb-0">
+            {% if attorney.facebook_link %}
+              <li><a href="{{ attorney.facebook_link }}" aria-label="facebook"><i class="icon-facebook"></i></a></li>
+            {% endif %}
+            {% if attorney.twitter_link %}
+              <li><a href="{{ attorney.twitter_link }}" aria-label="twitter"><i class="icon-twitter"></i></a></li>
+            {% endif %}
+            {% if attorney.linkedin_link %}
+              <li><a href="{{ attorney.linkedin_link }}" aria-label="linkedin"><i class="icon-linkedin"></i></a></li>
+            {% endif %}
+            {% if attorney.instagram_link %}
+              <li><a href="{{ attorney.instagram_link }}" aria-label="instagram"><i class="icon-instagram"></i></a></li>
+            {% endif %}
+          </ul>
         </div>
       </div>
-      <div class="row">
-        {% for attorney in attorneys_info %}
-          {% if attorney.attorneys_name %}
-            <div class="col-md-4 col-sm-4 text-center animate-box" data-animate-effect="fadeIn">
-              <div class="ftco-staff">
-                {% if attorney.attorney_image %}
-                  <img src="/media/{{ attorney.attorney_image }}" alt="{{ attorney.attorneys_name }}" />
-                {% endif %}
-                <h3>{{ attorney.attorneys_name }}</h3>
-                <strong class="role">{{ attorney.attorney_position }}</strong>
-                <p>{{ attorney.attorney_dsescription }}</p>
-                <ul class="ftco-social-icons">
-                  {% if attorney.facebook_link %}
-                    <li><a href="{{ attorney.facebook_link }}"><i class="icon-facebook"></i></a></li>
-                  {% endif %}
-                  {% if attorney.twitter_link %}
-                    <li><a href="{{ attorney.twitter_link }}"><i class="icon-twitter"></i></a></li>
-                  {% endif %}
-                  {% if attorney.linkedin_link %}
-                    <li><a href="{{ attorney.linkedin_link }}"><i class="icon-linkedin"></i></a></li>
-                  {% endif %}
-                  {% if attorney.instagram_link %}
-                    <li><a href="{{ attorney.instagram_link }}"><i class="icon-instagram"></i></a></li>
-                  {% endif %}
-                </ul>
-              </div>
-            </div>
+    {% endfor %}
+  {% elif attorneys|length == 2 %}
+    {% for attorney in attorneys %}
+      <div class="col-12 col-md-6 d-flex justify-content-center animate-box" data-animate-effect="fadeIn">
+        <div class="ftco-staff text-center shadow-sm p-4 rounded-4 bg-white mx-auto" style="max-width: 420px; width:100%">
+          {% if attorney.image %}
+            <img src="{{ attorney.image.url }}" alt="{{ attorney.name }}" class="img-fluid rounded mb-3" loading="lazy" style="width:220px;height:220px;object-fit:cover;" />
+          {% else %}
+            <img src="{% static 'images/default-user.jpg' %}" alt="Default Attorney" class="img-fluid rounded mb-3" loading="lazy" style="width:220px;height:220px;object-fit:cover;" />
           {% endif %}
+          <h3 class="mb-1">{{ attorney.name }}</h3>
+          <strong class="role text-muted d-block mb-2">{{ attorney.position }}</strong>
+          <p class="text-muted">{{ attorney.description }}</p>
+          <ul class="ftco-social-icons d-flex justify-content-center gap-2 list-unstyled mt-3 mb-0">
+            {% if attorney.facebook_link %}
+              <li><a href="{{ attorney.facebook_link }}" aria-label="facebook"><i class="icon-facebook"></i></a></li>
+            {% endif %}
+            {% if attorney.twitter_link %}
+              <li><a href="{{ attorney.twitter_link }}" aria-label="twitter"><i class="icon-twitter"></i></a></li>
+            {% endif %}
+            {% if attorney.linkedin_link %}
+              <li><a href="{{ attorney.linkedin_link }}" aria-label="linkedin"><i class="icon-linkedin"></i></a></li>
+            {% endif %}
+            {% if attorney.instagram_link %}
+              <li><a href="{{ attorney.instagram_link }}" aria-label="instagram"><i class="icon-instagram"></i></a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="col-12">
+      <div class="owl-carousel owl-carousel-fullwidth owl-theme" aria-label="Attorneys carousel">
+        {% for attorney in attorneys %}
+          <div class="item">
+            <div class="ftco-staff p-4 rounded-4 shadow-sm mx-2 d-flex flex-column align-items-center justify-content-between" style="background:#fff; min-height:320px;">
+              <figure class="mb-3">
+                {% if attorney.image %}
+                  <img src="{{ attorney.image.url }}" alt="{{ attorney.name }}" loading="lazy"
+                       class="img-fluid rounded-circle shadow-sm border"
+                       style="width:140px; height:140px; object-fit:cover;">
+                {% else %}
+                  <img src="{% static 'images/default-user.jpg' %}" alt="Default Attorney" loading="lazy"
+                       class="img-fluid rounded-circle shadow-sm border"
+                       style="width:140px; height:140px; object-fit:cover;">
+                {% endif %}
+              </figure>
+
+              <div class="w-100">
+                <h3 class="mb-1">{{ attorney.name }}</h3>
+                <strong class="role text-muted d-block mb-2">{{ attorney.position }}</strong>
+                <p class="text-muted" style="min-height:60px;">{{ attorney.description }}</p>
+              </div>
+
+              <ul class="ftco-social-icons d-flex justify-content-center gap-2 list-unstyled mt-3 mb-0">
+                {% if attorney.facebook_link %}
+                  <li><a href="{{ attorney.facebook_link }}" aria-label="facebook"><i class="icon-facebook"></i></a></li>
+                {% endif %}
+                {% if attorney.twitter_link %}
+                  <li><a href="{{ attorney.twitter_link }}" aria-label="twitter"><i class="icon-twitter"></i></a></li>
+                {% endif %}
+                {% if attorney.linkedin_link %}
+                  <li><a href="{{ attorney.linkedin_link }}" aria-label="linkedin"><i class="icon-linkedin"></i></a></li>
+                {% endif %}
+                {% if attorney.instagram_link %}
+                  <li><a href="{{ attorney.instagram_link }}" aria-label="instagram"><i class="icon-instagram"></i></a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        {% empty %}
+          <p class="text-center text-muted">No attorney profiles available.</p>
         {% endfor %}
       </div>
     </div>
+  {% endif %}
+</div>
+
   </div>
+</div>
+
 
   <!-- ✅ CLIENT TESTIMONIAL SECTION (Aligned with main container) -->
 <div id="ftco-testimonial" class="site-section">
@@ -100,36 +178,38 @@
     <!-- Testimonial Carousel -->
     <div class="row">
       <div class="col-md-12">
-        <div class="owl-carousel owl-carousel-fullwidth">
+        <div class="owl-carousel owl-carousel-fullwidth owl-theme" aria-label="Client testimonials carousel">
           {% for client in clients %}
             <div class="item">
-              <div class="testimony-slide text-center p-4 rounded-4 shadow-sm mx-2" style="background: #fff; border: 1px solid #eee; min-height: 320px;">
+              <div class="testimony-slide text-center p-4 rounded-4 shadow-sm mx-2 d-flex flex-column align-items-center justify-content-between" style="background: #fff; min-height: 320px;">
                 <figure class="mb-3">
                   {% if client.client_image %}
-                    <img src="{{ client.client_image.url }}" alt="{{ client.client_name }}"
+                    <img src="{{ client.client_image.url }}" alt="{{ client.client_name }}" loading="lazy"
                          class="img-fluid rounded-circle shadow-sm border"
                          style="width:120px; height:120px; object-fit:cover;">
                   {% else %}
-                    <img src="{% static 'images/default-user.jpg' %}" alt="User"
+                    <img src="{% static 'images/default-user.jpg' %}" alt="User" loading="lazy"
                          class="img-fluid rounded-circle shadow-sm border"
                          style="width:120px; height:120px; object-fit:cover;">
                   {% endif %}
                 </figure>
 
-                <h5 class="fw-semibold mt-3 mb-1">{{ client.client_name }}</h5>
-                <div class="text-warning mb-2">
-                  <i class="icon-star"></i>
-                  <i class="icon-star"></i>
-                  <i class="icon-star"></i>
-                  <i class="icon-star"></i>
-                  <i class="icon-star-half-full"></i>
-                </div>
+                <div class="w-100">
+                  <h5 class="fw-semibold mt-3 mb-1">{{ client.client_name }}</h5>
+                  <div class="text-warning mb-2">
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                    <i class="icon-star-half-full"></i>
+                  </div>
 
-                <blockquote class="blockquote mb-0">
-                  <p class="text-muted fst-italic" style="font-size: 15px; line-height: 1.6;">
-                    &ldquo;{{ client.client_message|default:'No message provided.' }}&rdquo;
-                  </p>
-                </blockquote>
+                  <blockquote class="blockquote mb-0">
+                    <p class="text-muted fst-italic" style="font-size: 15px; line-height: 1.6;">
+                      &ldquo;{{ client.client_message|default:'No message provided.' }}&rdquo;
+                    </p>
+                  </blockquote>
+                </div>
               </div>
             </div>
           {% empty %}
@@ -147,16 +227,30 @@
 {% endblock %}
 
 {% block extra_scripts %}
-  <!-- JS Files -->
-  <script src="{% static 'js/jquery.min.js' %}"></script>
-  <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
-  <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
-  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-  <script src="{% static 'js/jquery.flexslider-min.js' %}"></script>
-  <script src="{% static 'js/jquery.countTo.js' %}"></script>
-  <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-  <script src="{% static 'js/magnific-popup-options.js' %}"></script>
-  <script src="{% static 'js/main.js' %}"></script>
+  <script>
+    (function(){
+      var $ = window.jQuery;
+      if(!$) return;
+      $(document).ready(function(){
+        var $att = $('#ftco-about .owl-carousel');
+        if($att.length){
+          $att.owlCarousel({
+            items: 3,
+            loop: true,
+            margin: 20,
+            center: true,
+            nav: true,
+            dots: true,
+            autoplay: false,
+            responsive: {
+              0: { items: 1 },
+              600: { items: 2 },
+              1000: { items: 3 }
+            },
+            navText: ['<span class="icon-arrow-left"></span>','<span class="icon-arrow-right"></span>']
+          });
+        }
+      });
+    })();
+  </script>
 {% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'dashboard/admin_base.html' %}
+{% load static %}
+
+{% block title %}Edit Blog Post | Admin{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Edit Blog Post</h1>
+    <form method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" name="title" value="{{ post.title }}" class="form-control" required>
+        </div>
+        <div class="mb-3">
+                    <label class="form-label">Content</label>
+                <textarea name="content" id="id_content" rows="5" class="form-control" required>{{ post.content }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Author</label>
+            <select name="author" class="form-select">
+                <option value="">-- Select Author --</option>
+                {% for author in authors %}
+                    <option value="{{ author.id }}" {% if post.author.id == author.id %}selected{% endif %}>{{ author.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Image</label>
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="img-fluid rounded mb-2" style="max-height:150px;">
+            {% endif %}
+            <input type="file" name="image" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Update Post</button>
+        <a href="{% url 'admin_blog_dashboard' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<!-- CKEditor 4.22.1 -->
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('id_content', {
+        versionCheck: false  // suppress "not secure" message
+    });
+</script>
+
+{% endblock %}
+
+

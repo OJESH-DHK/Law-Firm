@@ -1,25 +1,55 @@
 {% extends 'dashboard/admin_base.html' %}
-{% block title %}Add Portfolio Item | Admin{% endblock %}
+{% load static %}
+
+{% block title %}Add Portfolio Item{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
-    <h1 class="mb-4">Add Portfolio Item</h1>
-    <form method="POST" enctype="multipart/form-data">
+  <h1 class="mb-4">Add Portfolio Item</h1>
+
+  <div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body">
+      <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
+
         <div class="mb-3">
-            <label class="form-label">Title</label>
-            <input type="text" name="title" class="form-control" required>
+          <label class="form-label fw-semibold">Title</label>
+          <input type="text" name="title" class="form-control" required>
         </div>
         <div class="mb-3">
-            <label class="form-label">Description</label>
-            <textarea name="description" class="form-control" rows="4" required></textarea>
+            <label class="form-label fw-semibold">Description</label>
+            <textarea name="description" id="id_description" rows="4" class="form-control" required></textarea>
         </div>
+
+
         <div class="mb-3">
-            <label class="form-label">Image</label>
-            <input type="file" name="image" class="form-control">
+          <label class="form-label fw-semibold">Image</label>
+          <input type="file" name="image" class="form-control">
         </div>
-        <button type="submit" class="btn btn-success">Add Item</button>
-        <a href="#" class="btn btn-secondary">Cancel</a>
-    </form>
+
+        <div class="d-flex justify-content-between">
+          <a href="{% url 'admin_portfolio' %}" class="btn btn-secondary">Cancel</a>
+          <button type="submit" class="btn btn-primary">Add Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
+
+<!-- CKEditor 4.22.1 -->
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('id_description', {
+        versionCheck: false,  // suppress the "not secure" warning
+        height: 200,           // optional: set editor height
+        toolbar: [
+            { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+            { name: 'paragraph', items: ['NumberedList', 'BulletedList'] },
+            { name: 'links', items: ['Link', 'Unlink'] },
+            { name: 'insert', items: ['Image', 'Table'] },
+            { name: 'styles', items: ['Format'] }
+        ]
+    });
+</script>
+
 {% endblock %}

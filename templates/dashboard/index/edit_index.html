@@ -1,0 +1,68 @@
+{% extends 'dashboard/admin_base.html' %}
+{% load static %}
+
+{% block title %}Edit Homepage Section | Law Firm{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h2 class="fw-bold text-primary mb-4">Edit Homepage Section</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label>Main Header</label>
+            <input type="text" name="header" class="form-control" value="{{ index.header }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Sub Header</label>
+            <textarea name="sub_header" class="form-control" rows="3" required>{{ index.sub_header }}</textarea>
+        </div>
+
+        <!-- Background Images -->
+        <div class="mb-3">
+            <label>Background Images (up to 3)</label>
+            <input type="file" name="background_images" class="form-control mb-1">
+            <input type="file" name="background_images" class="form-control mb-1">
+            <input type="file" name="background_images" class="form-control mb-1">
+
+            {% if index.background_images.all %}
+            <div class="mt-2">
+                <strong>Existing Images:</strong>
+                <div class="d-flex gap-2 flex-wrap mt-1">
+                    {% for bg in index.background_images.all %}
+                    <div class="position-relative">
+                        <img src="{{ bg.image.url }}" width="80" height="50" class="rounded" style="object-fit:cover;">
+                        <a href="{% url 'dashboard_delete_bg_image' bg.id %}" class="btn btn-sm btn-danger position-absolute top-0 end-0"
+                           style="padding: 2px 5px;" onclick="return confirm('Delete this image?');">×</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label>Second Header</label>
+            <input type="text" name="second_header" class="form-control" value="{{ index.second_header|default:'' }}">
+        </div>
+
+        <div class="mb-3">
+            <label>Second Sub Header</label>
+            <textarea name="second_sub_header" class="form-control" rows="3">{{ index.second_sub_header|default:'' }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label>Second Image</label>
+            <input type="file" name="second_image" class="form-control">
+            {% if index.second_image %}
+                <img src="{{ index.second_image.url }}" width="80" height="50" class="mt-1 rounded" style="object-fit:cover;">
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-success">Save Changes</button>
+        <a href="{% url 'dashboard_index' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

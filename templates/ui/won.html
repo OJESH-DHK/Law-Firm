@@ -48,7 +48,7 @@
                     <div class="card-body d-flex flex-column p-4">
                         <h5 class="card-title mb-3" style="font-weight: 600;">{{ item.item_title }}</h5>
                         <p class="card-text text-muted flex-grow-1">
-                            {{ item.item_description|truncatewords:20 }}
+                            {{ item.item_description|truncatewords:20|safe }}
                         </p>
                         <div class="mt-3 text-start">
                             <a href="{% url 'portfolio-detail' item.id %}" class="btn btn-outline-primary btn-sm rounded-pill px-3">
@@ -141,20 +141,6 @@
 <!-- ✅ END CLIENT TESTIMONIAL SECTION -->
 
 
-<!-- CTA Section -->
-<div id="intro-bg">
-    <div class="container">
-        <div id="ftco-intro" style="position: relative; margin-bottom: -150px!important;">
-            <div class="third-col">
-                <h2 class="h3">Need Legal Services?</h2>
-                <p>Our experienced lawyers are ready to assist with dedication and integrity.</p>
-            </div>
-            <div class="third-col third-col-color">
-                <h2 class="h3">Call now (+977) 9800000000</h2>
-                <p>Email: <a href="mailto:info@lawmaker.com">info@lawmaker.com</a></p>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 {% endblock %}

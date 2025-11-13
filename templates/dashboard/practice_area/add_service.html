@@ -1,0 +1,40 @@
+{% extends 'dashboard/admin_base.html' %}
+{% load static %}
+{% block title %}Add New Service{% endblock %}
+
+{% block content %}
+<h2>Add New Service</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <!-- Name -->
+    <div class="mb-3">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" required>
+    </div>
+    
+    <!-- Description (CKEditor) -->
+    <div class="mb-3">
+        <label>Description</label>
+        <textarea name="description" id="id_description" class="form-control" rows="5" required></textarea>
+    </div>
+    
+    <!-- Icon Image -->
+    <div class="mb-3">
+        <label>Icon Image</label>
+        <input type="file" name="icon_image" class="form-control">
+    </div>
+    
+    <!-- Buttons -->
+    <button type="submit" class="btn btn-success">Add Service</button>
+    <a href="{% url 'dashboard_practice_area' %}" class="btn btn-secondary">Cancel</a>
+</form>
+
+
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('id_description', {
+        versionCheck: false  // suppress the “not secure” warning
+    });
+</script>
+{% endblock %}

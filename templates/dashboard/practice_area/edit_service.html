@@ -1,0 +1,42 @@
+{% extends 'dashboard/admin_base.html' %}
+{% load static %}
+{% block title %}Edit Service{% endblock %}
+
+{% block content %}
+<h2>Edit Service</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" value="{{ service.name }}">
+    </div>
+
+    <div class="mb-3">
+        <label>Description</label>
+        <textarea name="description" id="id_description" class="form-control">{{ service.description }}</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label>Icon Image</label>
+        <input type="file" name="icon_image" class="form-control">
+        {% if service.icon_image %}
+            <img src="{{ service.icon_image.url }}" width="100" class="mt-2">
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-success">Update Service</button>
+</form>
+
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('id_description', {
+  versionCheck: false
+});
+
+</script>
+
+
+
+
+
+{% endblock %}

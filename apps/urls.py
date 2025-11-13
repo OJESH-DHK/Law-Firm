@@ -18,6 +18,7 @@ urlpatterns = [
     path('blog/<int:id>/', blog_single, name='blog_single'),
     path('portfolio/<int:id>/', portfolio_detail, name='portfolio-detail'),
 
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

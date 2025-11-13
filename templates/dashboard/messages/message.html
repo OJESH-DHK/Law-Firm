@@ -1,0 +1,124 @@
+{% extends 'dashboard/admin_base.html' %}
+{% load static %}
+
+{% block title %}Free Legal Advice Messages{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h2 class="fw-bold text-primary mb-4">Free Legal Advice Submissions</h2>
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle text-center">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>#</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                            <th>Submitted At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for msg in messages %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ msg.first_name }} {{ msg.last_name }}</td>
+                            <td>{{ msg.email }}</td>
+                            <td>{{ msg.subject }}</td>
+                            <td class="text-start">{{ msg.message }}</td>
+                            <td>{{ msg.submitted_at|date:"M d, Y - h:i A" }}</td>
+                            <td>
+                                <a href="{% url 'delete_legal_advice' msg.id %}" 
+                                   class="btn btn-sm btn-danger"
+                                   onclick="return confirm('Are you sure you want to delete this message?')">
+                                   <i class="fas fa-trash-alt me-1"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-muted">No messages received yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <!-- Contact Messages Table -->
+    <div class="card shadow-lg border-0 rounded-lg overflow-hidden">
+        <div class="card-header position-relative py-3"
+             style="background: linear-gradient(135deg, #373B44 0%, #4286f4 100%);">
+            <h5 class="mb-0 text-white">
+                <i class="fas fa-envelope me-2"></i>
+                Recent Messages
+            </h5>
+        </div>
+        <div class="card-body table-responsive bg-white" style="max-height: 500px; overflow-y: auto;">
+            {% if messages_list %}
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="bg-light">
+                        <th class="border-0 ps-3">
+                            <i class="fas fa-user text-primary me-2"></i>Name
+                        </th>
+                        <th class="border-0">
+                            <i class="fas fa-envelope text-primary me-2"></i>Email
+                        </th>
+                        <th class="border-0">
+                            <i class="fas fa-tag text-primary me-2"></i>Subject
+                        </th>
+                        <th class="border-0">
+                            <i class="fas fa-comment text-primary me-2"></i>Message
+                        </th>
+                        <th class="border-0">
+                            <i class="fas fa-calendar text-primary me-2"></i>Date
+                        </th>
+                        <th class="border-0 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for msg in messages_list %}
+                    <tr class="border-bottom">
+                        <td class="ps-3">
+                            <span class="fw-medium">{{ msg.first_name }} {{ msg.last_name }}</span>
+                        </td>
+                        <td class="text-muted">{{ msg.email }}</td>
+                        <td>
+                            <span class="text-dark">{{ msg.subject }}</span>
+                        </td>
+                        <td>
+                            <span class="text-muted">{{ msg.message|truncatechars:80 }}</span>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark">
+                                {{ msg.created_at|date:"M d, Y H:i" }}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <a href="{% url 'delete_contact_message' msg.id %}" 
+                               class="btn btn-sm btn-outline-danger"
+                               onclick="return confirm('Are you sure you want to delete this message?');">
+                                <i class="fas fa-trash-alt me-1"></i>
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="text-center py-4">
+                <i class="fas fa-inbox text-muted mb-3" style="font-size: 2rem;"></i>
+                <p class="text-muted mb-0">No messages yet.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

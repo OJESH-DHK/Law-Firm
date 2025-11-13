@@ -1,0 +1,63 @@
+{% extends 'dashboard/admin_base.html' %}
+{% load static %}
+
+{% block title %}Edit About Entry{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="mb-4">Edit About Entry</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Main Title</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ about_entry.title }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Main Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3">{{ about_entry.description }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="second_title" class="form-label">Second Section Title</label>
+            <input type="text" class="form-control" id="second_title" name="second_title" value="{{ about_entry.second_title }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="second_description" class="form-label">Second Section Description</label>
+            <textarea class="form-control" id="second_description" name="second_description" rows="3">{{ about_entry.second_description }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="third_title" class="form-label">Third Section Title</label>
+            <input type="text" class="form-control" id="third_title" name="third_title" value="{{ about_entry.third_title }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="third_description" class="form-label">Third Section Description</label>
+            <textarea class="form-control" id="third_description" name="third_description" rows="3">{{ about_entry.third_description }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Main Image</label>
+            <input type="file" class="form-control" id="image" name="image">
+            {% if about_entry.image %}
+                <img src="{{ about_entry.image.url }}" alt="Current Image" class="img-thumbnail mt-2" style="width: 150px;">
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="second_image" class="form-label">Second Section Image</label>
+            <input type="file" class="form-control" id="second_image" name="second_image">
+            {% if about_entry.second_image %}
+                <img src="{{ about_entry.second_image.url }}" alt="Current Image" class="img-thumbnail mt-2" style="width: 150px;">
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Entry</button>
+        <a href="{% url 'dashboard_about' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

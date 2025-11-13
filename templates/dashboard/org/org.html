@@ -1,0 +1,71 @@
+{% extends 'dashboard/admin_base.html' %}
+{% load static %}
+
+{% block title %}Organization Settings{% endblock %}
+
+{% block page_title %}Organization Settings{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card shadow-sm rounded-4 p-4">
+        <h4 class="mb-4">Update Organization Information</h4>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Organization Name</label>
+                <input type="text" name="name" class="form-control" value="{{ org_info.name|default_if_none:'' }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Organization Details</label>
+                <textarea name="org_details" class="form-control" rows="3">{{ org_info.org_details|default_if_none:'' }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Service 1</label>
+                <input type="text" name="service_1" class="form-control" value="{{ org_info.service_1|default_if_none:'' }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Service 2</label>
+                <input type="text" name="service_2" class="form-control" value="{{ org_info.service_2|default_if_none:'' }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Service 3</label>
+                <input type="text" name="service_3" class="form-control" value="{{ org_info.service_3|default_if_none:'' }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Service 4</label>
+                <input type="text" name="service_4" class="form-control" value="{{ org_info.service_4|default_if_none:'' }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Service 5</label>
+                <input type="text" name="service_5" class="form-control" value="{{ org_info.service_5|default_if_none:'' }}">
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Facebook Link</label>
+                <input type="url" name="facebook_link" class="form-control" value="{{ org_info.facebook_link|default_if_none:'' }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Twitter Link</label>
+                <input type="url" name="twitter_link" class="form-control" value="{{ org_info.twitter_link|default_if_none:'' }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">LinkedIn Link</label>
+                <input type="url" name="linkedin_link" class="form-control" value="{{ org_info.linkedin_link|default_if_none:'' }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Instagram Link</label>
+                <input type="url" name="instagram_link" class="form-control" value="{{ org_info.instagram_link|default_if_none:'' }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Organization Logo</label>
+                <input type="file" name="org_logo" class="form-control">
+                {% if org_info.org_logo %}
+                    <img src="{{ org_info.org_logo.url }}" alt="Logo" class="mt-2" style="height:80px;">
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

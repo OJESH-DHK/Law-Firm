@@ -4,462 +4,431 @@
 {% block title %}Home | Lawmaker{% endblock %}
 
 {% block content %}
+<!-- HERO SECTION -->
+<aside id="ftco-hero" class="js-fullheight">
+    <div class="flexslider js-fullheight">
+        <ul class="slides">
+            {% for section in index_sections %}
+                {% for bg_image in section.background_images.all %}
+                <li style="background-image: url('{{ bg_image.image.url }}');">
+                    <div class="overlay-gradient"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
+                                <div class="slider-text-inner">
+                                    <h1><strong>{{ section.header }}</strong></h1>
+                                    <h2>{{ section.sub_header }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+</aside>
 
-	<aside id="ftco-hero" class="js-fullheight">
-		<div class="flexslider js-fullheight">
-			<ul class="slides">
-		   	<li style="background-image: url({% static 'images/hero_1.jpg' %});">
-		   		<div class="overlay-gradient"></div>
-		   		<div class="container">
-		   			<div class="row">
-			   			<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
-			   				<div class="slider-text-inner">
-			   					<h1><strong>Defend Your Constitutional Right with Legal Help</strong></h1>
-									<h2>Visit <a href="#" target="_blank">Colorlib</a> for more free templates</h2>
-									<p><a class="btn btn-primary btn-lg btn-learn" href="#" target="_blank">Colorlib</a></p>
-			   				</div>
-			   			</div>
-			   		</div>
-		   		</div>
-		   	</li>
-		   	<li style="background-image: url({% static 'images/hero_3.jpg' %});">
-		   		<div class="overlay-gradient"></div>
-		   		<div class="container">
-		   			<div class="row">
-			   			<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
-			   				<div class="slider-text-inner">
-			   					<h1><strong>Defend Your Constitutional Right with Legal Help</strong></h1>
-									<h2>Visit <a href="#" target="_blank">Colorlib</a> for more free templates</h2>
-									<p><a class="btn btn-primary btn-lg btn-learn" href="#" target="_blank">Colorlib</a></p>
-			   				</div>
-			   			</div>
-			   		</div>
-		   		</div>
-		   	</li>
-		   	<li style="background-image: url({% static 'images/hero_2.jpg' %});">
-		   		<div class="overlay-gradient"></div>
-		   		<div class="container">
-		   			<div class="row">
-			   			<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
-			   				<div class="slider-text-inner">
-			   					<h1><strong>Defend Your Constitutional Right with Legal Help</strong></h1>
-									<h2>Visit <a href="#" target="_blank">Colorlib</a> for more free templates</h2>
-									<p><a class="btn btn-primary btn-lg btn-learn" href="#" target="_blank">Colorlib</a></p>
-			   				</div>
-			   			</div>
-			   		</div>
-		   		</div>
-		   	</li>		   	
-		  	</ul>
-	  	</div>
-	</aside>
+<!-- ✅ UNIFORM SECTION SPACING -->
+<style>
+    .site-section,
+    #ftco-testimonial,
+    #ftco-consult,
+    #ftco-blog,
+    #ftco-about,
+    .ftco-practice {
+        margin-top: 40px !important;
+        margin-bottom: 40px !important;
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+    }
+    .ftco-practice .container,
+    #ftco-testimonial .container,
+    #ftco-consult .container,
+    #ftco-blog .container,
+    #ftco-about .container {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+</style>
 
-	<div class="site-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6">
-					<img src="{% static 'images/hero_1.jpg' %}" alt="Image" class="img-responsive img-rounded">
-				</div>
-				<div class="col-md-1"></div>
-				<div class="col-md-5">
-					<h2>Welcome To Our Legal Office</h2>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-					<p><a href="#" class="btn btn-primary">Read More</a></p>
-				</div>
-			</div>
-		</div>
-	</div>
+<!-- SECOND SECTION -->
+{% for section in index_sections %}
+    {% if section.second_header or section.second_image %}
+    <div class="site-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    {% if section.second_image %}
+                        <img src="{{ section.second_image.url }}" alt="Image" class="img-responsive img-rounded">
+                    {% endif %}
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
+                    {% if section.second_header %}
+                        <h2>{{ section.second_header }}</h2>
+                    {% endif %}
+                    {% if section.second_sub_header %}
+                        <p>{{ section.second_sub_header }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endfor %}
 
-	<div class="ftco-practice">
-		<div class="container">
-			
-			<div class="row">
-				<div class="col-md-4 text-center animate-box">
-					<div class="services">
-						<span class="icon">
-							<i class="flaticon-courthouse"></i>
-						</span>
-						<div class="desc">
-							<h3><a href="#">Real Estate Law</a></h3>
-							<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 text-center animate-box">
-					<div class="services">
-						<span class="icon">
-							<i class="flaticon-padlock"></i>
-						</span>
-						<div class="desc">
-							<h3><a href="#">Insurance Law</a></h3>
-							<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 text-center animate-box">
-					<div class="services">
-						<span class="icon">
-							<i class="flaticon-folder"></i>
-						</span>
-						<div class="desc">
-							<h3><a href="#">Business Law</a></h3>
-							<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<!-- PRACTICE AREA SECTION -->
+<div class="ftco-practice">
+    <div class="container">
+        <div class="row animate-box mb-4">
+            <div class="col-md-8 col-md-offset-2 text-center ftco-heading">
+                <h2>{{ main.practice_area }}</h2>
+                <p>{{ main.practice_area_description }}</p>
+            </div>
+        </div>
 
+        <div class="row">
+            {% for area in areas %}
+            <div class="col-md-4 text-center animate-box mb-4">
+                <div class="practice-area-card">
+                    <a href="{% url 'practice-area-detail' area.id %}" class="card-link">
+                        {% if area.icon_image %}
+                            <div class="card-image" style="background-image: url('{{ area.icon_image.url }}');"></div>
+                        {% else %}
+                            <div class="card-image" style="background-image: url('{% static 'images/default-icon.png' %}');"></div>
+                        {% endif %}
+                        
+                        <div class="card-overlay">
+                            <div class="card-content">
+                                <h3>{{ area.name }}</h3>
+                                <p>{{ area.description|truncatewords:20|safe}}</p>
+                                <span class="read-more-link">Read More →</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+                <p class="text-center">No practice areas available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
-	
+<style>
+    .practice-area-card {
+        position: relative;
+        height: 400px;
+        overflow: hidden;
+        border-radius: 1rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+        transition: all 0.3s ease;
+    }
 
-	<div id="ftco-counter" class="ftco-counters" style="background-image: url({% static 'images/img_bg_3.jpg' %});" data-stellar-background-ratio="0.5">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-3 text-center animate-box">
-					<span class="icon"><i class="flaticon-lawyer-1"></i></span>
-					<span class="ftco-counter js-counter" data-from="0" data-to="2893" data-speed="5000" data-refresh-interval="50"></span>
-					<span class="ftco-counter-label">Our Lawyer</span>
-				</div>
-				<div class="col-md-3 text-center animate-box">
-					<span class="icon"><i class="flaticon-courthouse"></i></span>
-					<span class="ftco-counter js-counter" data-from="0" data-to="291" data-speed="5000" data-refresh-interval="50"></span>
-					<span class="ftco-counter-label">Our Clients</span>
-				</div>
-				<div class="col-md-3 text-center animate-box">
-					<span class="icon"><i class="flaticon-libra"></i></span>
-					<span class="ftco-counter js-counter" data-from="0" data-to="952" data-speed="5000" data-refresh-interval="50"></span>
-					<span class="ftco-counter-label">Successful Case</span>
-				</div>
-				<div class="col-md-3 text-center animate-box">
-					<span class="icon"><i class="flaticon-police-badge"></i></span>
-					<span class="ftco-counter js-counter" data-from="0" data-to="1921" data-speed="5000" data-refresh-interval="50"></span>
-					<span class="ftco-counter-label">Honor &amp; Awards</span>
-				</div>
-			</div>
-		</div>
-	</div>
+    .practice-area-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+    }
 
-	<div id="ftco-content">
-		<div class="video ftco-video" style="background-image: url({% static 'images/blog-4.jpg' %});">
-			<a href="https://vimeo.com/channels/staffpicks/93951774" class="popup-vimeo"><i class="icon-play"></i></a>
-			<div class="overlay"></div>
-		</div>
-		<div class="choose animate-box">
-			<div class="ftco-heading">
-				<h2>Far far away, behind the word mountains</h2>
-				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-				<p><a href="#" class="btn btn-primary">Learn More</a></p>
-			</div>
-			
-		</div>
-	</div>
+    .practice-area-card .card-link {
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+    }
 
-	<div class="ftco-practice">
-		<div class="container">
-			<div class="row animate-box">
-				<div class="col-md-8 col-md-offset-2 text-center ftco-heading">
-					<h2>Practice Area</h2>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4 text-center animate-box">
-					<div class="services">
-						<span class="icon">
-							<i class="flaticon-courthouse"></i>
-						</span>
-						<div class="desc">
-							<h3><a href="#">Real Estate Law</a></h3>
-							<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 text-center animate-box">
-					<div class="services">
-						<span class="icon">
-							<i class="flaticon-padlock"></i>
-						</span>
-						<div class="desc">
-							<h3><a href="#">Insurance Law</a></h3>
-							<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 text-center animate-box">
-					<div class="services">
-						<span class="icon">
-							<i class="flaticon-folder"></i>
-						</span>
-						<div class="desc">
-							<h3><a href="#">Business Law</a></h3>
-							<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 text-center animate-box">
-					<div class="services">
-						<span class="icon">
-							<i class="flaticon-handcuffs"></i>
-						</span>
-						<div class="desc">
-							<h3><a href="#">Personal Injury</a></h3>
-							<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 text-center animate-box">
-					<div class="services">
-						<span class="icon">
-							<i class="flaticon-handcuffs"></i>
-						</span>
-						<div class="desc">
-							<h3><a href="#">Medical Neglegence</a></h3>
-							<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 text-center animate-box">
-					<div class="services">
-						<span class="icon">
-							<i class="flaticon-libra"></i>
-						</span>
-						<div class="desc">
-							<h3><a href="#">Criminal Defense</a></h3>
-							<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12 text-center animate-box">
-					<p><a class="btn btn-primary btn-lg btn-learn" href="#">View More <i class="icon-arrow-right"></i></a></p>
-				</div>
-			</div>
-		</div>
-	</div>
+    .practice-area-card .card-image {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: transform 0.3s ease;
+    }
 
-	<div id="ftco-started" style="background-image:url({% static 'images/img_bg_2.jpg' %});" data-stellar-background-ratio="0.5">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row animate-box">
-				<div class="col-md-8 col-md-offset-2 text-center ftco-heading ftco-heading2">
-					<h2>Far far away, behind the word mountains</h2>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-					<p><a href="#" class="btn btn-primary btn-lg">Consultation</a></p>
-				</div>
-			</div>
-		</div>
-	</div>
-	
+    .practice-area-card:hover .card-image {
+        transform: scale(1.05);
+    }
 
-	<div id="ftco-testimonial" class="ftco-bg-section">
-		<div class="container">
-			<div class="row animate-box">
-				<div class="col-md-6 col-md-offset-3 text-center ftco-heading">
-					<h2>What are the clients says</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-10 col-md-offset-1">
-					<div class="row animate-box">
-						<div class="owl-carousel owl-carousel-fullwidth">
-							<div class="item">
-								<div class="testimony-slide active text-center">
-									<figure>
-										<img src="{% static 'images/user-1.jpg' %}" alt="user">
-									</figure>
-									<span>Carl Smith</span>
-									<blockquote>
-										<p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-									</blockquote>
-								</div>
-							</div>
-							<div class="item">
-								<div class="testimony-slide active text-center">
-									<figure>
-										<img src="{% static 'images/user-2.jpg' %}" alt="user">
-									</figure>
-									<span>John Lockwood</span>
-									<blockquote>
-										<p>&ldquo;Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-									</blockquote>
-								</div>
-							</div>
-							<div class="item">
-								<div class="testimony-slide active text-center">
-									<figure>
-										<img src="{% static 'images/user-3.jpg' %}" alt="user">
-									</figure>
-									<span>Joyce Kroell</span>
-									<blockquote>
-										<p>&ldquo;Far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-									</blockquote>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    .practice-area-card .card-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
 
-	<div id="ftco-consult">
-		<div class="video ftco-video" style="background-image: url({% static 'images/hero_3.jpg' %});" data-stellar-background-ratio="0.5">
-		</div>
-		<div class="choose choose-form animate-box">
-			<div class="ftco-heading">
-				<h2>Free Legal Advice</h2>
-			</div>
-			<form action="#">
-				<div class="row form-group">
-					<div class="col-md-6">
-						<label for="fname">First Name</label>
-						<input type="text" id="fname" class="form-control">
-					</div>
-					<div class="col-md-6">
-						<label for="lname">Last Name</label>
-						<input type="text" id="lname" class="form-control">
-					</div>
-				</div>
+    .practice-area-card:hover .card-overlay {
+        opacity: 1;
+    }
 
-				<div class="row form-group">
-					<div class="col-md-12">
-						<label for="email">Email</label>
-						<input type="text" id="email" class="form-control">
-					</div>
-				</div>
+    .practice-area-card .card-content {
+        text-align: center;
+        color: #ffffff;
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+    }
 
-				<div class="row form-group">
-					<div class="col-md-12">
-						<label for="subject">Subject</label>
-						<input type="text" id="subject" class="form-control">
-					</div>
-				</div>
+    .practice-area-card:hover .card-content {
+        transform: translateY(0);
+    }
 
-				<div class="row form-group">
-					<div class="col-md-12">
-						<label for="message">Message</label>
-						<textarea name="message" id="message" cols="30" rows="10" class="form-control"></textarea>
-					</div>
-				</div>
-				<div class="form-group">
-					<input type="submit" value="Send Message" class="btn btn-primary">
-				</div>
+    .practice-area-card .card-content h3 {
+        font-size: 1.75rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #ffffff;
+    }
 
-			</form>	
-		</div>
-	</div>
+    .practice-area-card .card-content p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        color: #ffffff;
+    }
 
-	<div id="ftco-blog">
-		<div class="container">
-			<div class="row animate-box">
-				<div class="col-md-8 col-md-offset-2 text-center ftco-heading">
-					<h2>Recent Post</h2>
-					<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6 col-lg-4">
-					<div class="blog-featured animate-box">
-						<a href="blog-single.html"><img class="img-responsive img-rounded" src="{% static 'images/blog-1.jpg' %}" alt=""></a>
-						<h2><a href="blog-single.html">Far from the countries Vokalia and Consonantia</a></h2>
-						<p class="meta"><span>Jan 5, 2017</span> | <span>3 Comments</span></p>
-						<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however</p>
-					</div>
-				</div>
+    .practice-area-card .read-more-link {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background-color: rgba(255,255,255,0.2);
+        border: 2px solid #ffffff;
+        border-radius: 0.25rem;
+        color: #ffffff;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
 
-				<div class="col-md-6 col-lg-4">
-					<div class="blog-featured animate-box">
-						<a href="blog-single.html"><img class="img-responsive img-rounded" src="{% static 'images/blog-2.jpg' %}" alt=""></a>
-						<h2><a href="blog-single.html">Far from the countries Vokalia and Consonantia</a></h2>
-						<p class="meta"><span>Jan 5, 2017</span> | <span>3 Comments</span></p>
-						<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however</p>
-					</div>
-				</div>
+    .practice-area-card .read-more-link:hover {
+        background-color: #ffffff;
+        color: #333;
+    }
 
-				<div class="col-md-6 col-lg-4">
-					<div class="blog-featured animate-box">
-						<a href="blog-single.html"><img class="img-responsive img-rounded" src="{% static 'images/blog-3.jpg' %}" alt=""></a>
-						<h2><a href="blog-single.html">Far from the countries Vokalia and Consonantia</a></h2>
-						<p class="meta"><span>Jan 5, 2017</span> | <span>3 Comments</span></p>
-						<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    @media (max-width: 768px) {
+        .practice-area-card {
+            height: 350px;
+        }
+    }
+</style>
 
-	<div id="ftco-about">
-		<div class="container">
-			<div class="row animate-box">
-				<div class="col-md-8 col-md-offset-2 text-center ftco-heading">
-					<h2>Our Attorneys</h2>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4 col-sm-4 text-center animate-box" data-animate-effect="fadeIn">
-					<div class="ftco-staff">
-						<img src="{% static 'images/user-3.jpg' %}" alt="Template">
-						<h3>Joyce Kroell</h3>
-						<strong class="role">Counsel</strong>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-						<ul class="ftco-social-icons">
-							<li><a href="#"><i class="icon-facebook"></i></a></li>
-							<li><a href="#"><i class="icon-twitter"></i></a></li>
-							<li><a href="#"><i class="icon-dribbble"></i></a></li>
-							<li><a href="#"><i class="icon-linkedin"></i></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-4 text-center animate-box" data-animate-effect="fadeIn">
-					<div class="ftco-staff">
-						<img src="{% static 'images/user-1.jpg' %}" alt="Template">
-						<h3>James Garett</h3>
-						<strong class="role">Head of International Practice</strong>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-						<ul class="ftco-social-icons">
-							<li><a href="#"><i class="icon-facebook"></i></a></li>
-							<li><a href="#"><i class="icon-twitter"></i></a></li>
-							<li><a href="#"><i class="icon-dribbble"></i></a></li>
-							<li><a href="#"><i class="icon-linkedin"></i></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-4 text-center animate-box" data-animate-effect="fadeIn">
-					<div class="ftco-staff">
-						<img src="{% static 'images/user-2.jpg' %}" alt="Template">
-						<h3>Peter Washington</h3>
-						<strong class="role">Managing Partner, Attorney</strong>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-						<ul class="ftco-social-icons">
-							<li><a href="#"><i class="icon-facebook"></i></a></li>
-							<li><a href="#"><i class="icon-twitter"></i></a></li>
-							<li><a href="#"><i class="icon-dribbble"></i></a></li>
-							<li><a href="#"><i class="icon-linkedin"></i></a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<!-- ✅ CLIENT TESTIMONIAL SECTION -->
+<div id="ftco-testimonial" class="site-section">
+  <div class="container">
+    <div class="row animate-box mb-3">
+      <div class="col-md-8 col-md-offset-2 text-center ftco-heading">
+        <h2 class="fw-bold text-uppercase mb-2">{{ latest_client.title }}</h2>
+        <p class="text-muted small mb-1">What our clients say about working with us.</p>
+      </div>
+    </div>
 
-	<div id="intro-bg" >
-		<div class="container">
-			<div id="ftco-intro" style="position: relative; margin-bottom: -150px!important;">
-				<div class="third-col">
-					<h2 class="h3">Need Legal Services?</h2>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-				</div>
-				<div class="third-col third-col-color">
-					<h2 class="h3">Call now (+1) 123-456-7890</h2>
-					<p>Email us at <a href="#" target="_blank">info@yourwebsite.com</a></p>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="owl-carousel owl-carousel-fullwidth owl-theme" aria-label="Client testimonials carousel">
+          {% for client in clients %}
+          <div class="item">
+            <div class="testimony-slide text-center p-3 rounded-4 shadow-sm mx-2 d-flex flex-column align-items-center justify-content-between" 
+                 style="background: #fff; min-height: 300px;">
+              <figure class="mb-2">
+                {% if client.client_image %}
+                  <img src="{{ client.client_image.url }}" alt="{{ client.client_name }}" 
+                       class="img-fluid rounded-circle shadow-sm border"
+                       style="width:100px; height:100px; object-fit:cover;">
+                {% else %}
+                  <img src="{% static 'images/default-user.jpg' %}" alt="User" 
+                       class="img-fluid rounded-circle shadow-sm border"
+                       style="width:100px; height:100px; object-fit:cover;">
+                {% endif %}
+              </figure>
+              <div class="w-100">
+                <h6 class="fw-semibold mb-1">{{ client.client_name }}</h6>
+                <div class="text-warning small mb-1">
+                  <i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i>
+                  <i class="icon-star"></i><i class="icon-star-half-full"></i>
+                </div>
+                <blockquote class="blockquote mb-0">
+                  <p class="text-muted fst-italic small">
+                    “{{ client.client_message|default:'No message provided.' }}”
+                  </p>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-center text-muted small">No client testimonials available.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- ✅ FREE LEGAL ADVICE SECTION -->
+<div id="ftco-consult" class="site-section">
+  <div class="video ftco-video"
+       style="background-image: url({{ legal_info.image.url|default:'{% static "images/hero_3.jpg" %}' }});"
+       data-stellar-background-ratio="0.5">
+  </div>
+
+  <div class="choose choose-form animate-box p-4 rounded-4 shadow-sm">
+    <div class="ftco-heading text-center mb-3">
+      <h3>Free Legal Advice</h3>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success small mt-2">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="row g-2">
+        <div class="col-md-6">
+          <label for="fname" class="small">First Name</label>
+          <input type="text" id="fname" name="fname" class="form-control form-control-sm" required>
+        </div>
+        <div class="col-md-6">
+          <label for="lname" class="small">Last Name</label>
+          <input type="text" id="lname" name="lname" class="form-control form-control-sm" required>
+        </div>
+      </div>
+
+      <div class="mt-2">
+        <label for="email" class="small">Email</label>
+        <input type="email" id="email" name="email" class="form-control form-control-sm" required>
+      </div>
+
+      <div class="mt-2">
+        <label for="subject" class="small">Subject</label>
+        <input type="text" id="subject" name="subject" class="form-control form-control-sm" required>
+      </div>
+
+      <div class="mt-2">
+        <label for="message" class="small">Message</label>
+        <textarea name="message" id="message" rows="4" class="form-control form-control-sm" required></textarea>
+      </div>
+
+      <div class="text-center mt-3">
+        <input type="submit" value="Send Message" class="btn btn-primary btn-sm px-3 py-2">
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ✅ BLOG SECTION -->
+<div id="ftco-blog" class="site-section">
+  <div class="container">
+    <div class="row animate-box mb-3">
+      <div class="col-md-8 col-md-offset-2 text-center ftco-heading">
+        <h2 class="fw-bold mb-1">{{ blog.title }}</h2>
+        <p class="text-muted small">{{ blog.description }}</p>
+      </div>
+    </div>
+
+    <!-- Blog Cards -->
+    <div class="row g-4">
+      {% for post in blog_content %}
+      <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+        <div class="card h-100 shadow-sm">
+          {% if post.image %}
+            <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" style="height:200px; object-fit:cover;">
+          {% else %}
+            <img src="{% static 'images/default-blog.jpg' %}" class="card-img-top" alt="{{ post.title }}" style="height:200px; object-fit:cover;">
+          {% endif %}
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="text-muted mb-2">{{ post.created_at|date:"F d, Y" }}</p>
+            <p class="card-text flex-grow-1">{{ post.content|truncatewords:20|safe }}</p>
+            <a href="{% url 'blog_single' post.id %}" class="btn btn-primary mt-2 align-self-start">Read More</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-center">No blog posts found.</p>
+      {% endfor %}
+    </div>
+
+    <div class="row mt-4">
+      <div class="col text-center">
+        <a href="{% url 'blog_main' %}" class="btn btn-outline-primary btn-lg">View All Blogs</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ ATTORNEYS SECTION -->
+<div id="ftco-about" class="site-section">
+  <div class="container">
+    <div class="row animate-box">
+      <div class="col-md-8 col-md-offset-2 text-center ftco-heading">
+        <h2>{{ latest_info.third_title }}</h2>
+        <p>{{ latest_info.third_description }}</p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      {% if attorneys|length == 1 %}
+        {% for attorney in attorneys %}
+          <div class="col-12 d-flex justify-content-center animate-box">
+            <div class="ftco-staff text-center shadow-sm p-4 rounded-4 bg-white" style="max-width: 420px;">
+              {% if attorney.image %}
+                <img src="{{ attorney.image.url }}" alt="{{ attorney.name }}" class="img-fluid rounded mb-3" style="width:220px;height:220px;object-fit:cover;">
+              {% else %}
+                <img src="{% static 'images/default-user.jpg' %}" alt="Default Attorney" class="img-fluid rounded mb-3" style="width:220px;height:220px;object-fit:cover;">
+              {% endif %}
+              <h3>{{ attorney.name }}</h3>
+              <strong class="role text-muted">{{ attorney.position }}</strong>
+              <p>{{ attorney.description }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      {% elif attorneys|length == 2 %}
+        {% for attorney in attorneys %}
+          <div class="col-md-6 d-flex justify-content-center animate-box">
+            <div class="ftco-staff text-center shadow-sm p-4 rounded-4 bg-white" style="max-width: 420px;">
+              {% if attorney.image %}
+                <img src="{{ attorney.image.url }}" alt="{{ attorney.name }}" class="img-fluid rounded mb-3" style="width:220px;height:220px;object-fit:cover;">
+              {% else %}
+                <img src="{% static 'images/default-user.jpg' %}" alt="Default Attorney" class="img-fluid rounded mb-3" style="width:220px;height:220px;object-fit:cover;">
+              {% endif %}
+              <h3>{{ attorney.name }}</h3>
+              <strong class="role text-muted">{{ attorney.position }}</strong>
+              <p>{{ attorney.description }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-12">
+          <div class="owl-carousel owl-carousel-fullwidth owl-theme">
+            {% for attorney in attorneys %}
+              <div class="item">
+                <div class="ftco-staff p-4 rounded-4 shadow-sm mx-2 text-center bg-white">
+                  <figure class="mb-3">
+                    {% if attorney.image %}
+                      <img src="{{ attorney.image.url }}" alt="{{ attorney.name }}" class="img-fluid rounded-circle" style="width:140px;height:140px;object-fit:cover;">
+                    {% else %}
+                      <img src="{% static 'images/default-user.jpg' %}" alt="Default Attorney" class="img-fluid rounded-circle" style="width:140px;height:140px;object-fit:cover;">
+                    {% endif %}
+                  </figure>
+                  <h3>{{ attorney.name }}</h3>
+                  <strong class="role text-muted">{{ attorney.position }}</strong>
+                  <p>{{ attorney.description }}</p>
+                </div>
+              </div>
+            {% empty %}
+              <p class="text-center text-muted">No attorney profiles available.</p>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
 
 {% endblock %}

@@ -1,0 +1,106 @@
+/* Site overrides to fix avatar alignment in Owl carousels and ftco-staff components */
+/* Targets the attorneys carousel and similar components to ensure centered avatars */
+
+/* Make each owl slide center its content */
+#ftco-about .owl-carousel .owl-item,
+#ftco-about .owl-carousel .item {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+}
+
+/* Prevent floats and force centered staff cards */
+#ftco-about .owl-carousel .ftco-staff,
+#ftco-about .owl-carousel .item .ftco-staff {
+  float: none !important;
+  width: auto !important;
+  max-width: 420px !important;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+/* Ensure images don't expand to 100% or float left */
+#ftco-about .owl-carousel .ftco-staff img,
+#ftco-about .owl-carousel .item .ftco-staff img {
+  float: none !important;
+  display: block !important;
+  margin: 0 auto !important;
+  width: auto !important;
+  max-width: 140px !important; /* keep avatar size consistent */
+  height: auto !important;
+}
+
+/* Extra safety: center any figure inside a staff card */
+#ftco-about .owl-carousel .ftco-staff figure {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 0 !important;
+}
+
+/* Also ensure the owl-stage doesn't collapse or misalign items */
+#ftco-about .owl-carousel .owl-stage-outer,
+#ftco-about .owl-carousel .owl-stage {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Apply a consistent centering for other ftco-staff uses if necessary */
+.ftco-staff {
+  float: none !important;
+}
+
+/* Force centering for non-carousel (1 or 2) layouts: ensure the column centers its card */
+#ftco-about .row .col-md-6 {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+#ftco-about .row .col-md-6 > .ftco-staff {
+  margin: 0 auto !important;
+  display: block !important;
+  float: none !important;
+  width: 100% !important;
+  max-width: 420px !important;
+}
+
+#ftco-about .row .col-md-6 > .ftco-staff img {
+  display: block !important;
+  margin: 0 auto !important;
+  float: none !important;
+  width: auto !important;
+  max-width: 220px !important;
+  height: auto !important;
+}
+
+/* Strong single-attorney centering override: make the card fixed width and auto-margined */
+#ftco-about .row.justify-content-center > .col-12 > .ftco-staff,
+#ftco-about .row.justify-content-center > .col-12.d-flex > .ftco-staff {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 420px !important;
+  max-width: 420px !important;
+  box-sizing: border-box !important;
+}
+
+/* Force avatar size and prevent .img-fluid from expanding */
+#ftco-about .ftco-staff img.img-fluid,
+#ftco-about .ftco-staff img {
+  width: 220px !important;
+  height: 220px !important;
+  object-fit: cover !important;
+  display: block !important;
+  margin: 0 auto !important;
+  float: none !important;
+}
+
+/* If any parent column has extra padding/margin from the theme, ensure centering flex container */
+#ftco-about .row.justify-content-center > .col-12 {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}

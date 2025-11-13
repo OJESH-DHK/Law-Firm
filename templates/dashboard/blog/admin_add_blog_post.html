@@ -1,0 +1,45 @@
+{% extends 'dashboard/admin_base.html' %}
+{% load static %}
+
+{% block title %}Add Blog Post | Admin{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Add New Blog Post</h1>
+    <form method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" name="title" class="form-control" placeholder="Enter blog title" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Content</label>
+            <textarea name="content" id="id_content" rows="5" class="form-control" placeholder="Write your post here..." required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Author</label>
+            <select name="author" class="form-select">
+                <option value="">-- Select Author --</option>
+                {% for author in authors %}
+                    <option value="{{ author.id }}">{{ author.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Image</label>
+            <input type="file" name="image" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Add Post</button>
+        <a href="{% url 'admin_blog_dashboard' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<!-- CKEditor 4.22.1 -->
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('id_content', {
+        versionCheck: false  // suppress "not secure" message
+    });
+</script>
+{% endblock %}

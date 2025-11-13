@@ -6,32 +6,78 @@ from .models import *
 
 
 #index page view
-def index(request):
-    return render(request, 'ui/index.html')
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import (
+    Index, PracticeAreaMain, PracticeService, Client,
+    Blog, BlogPost, Attorney, AboutUs,
+    FreeLegalAdvice, LegalAdviceInfo
+)
 
-#about page view
+def index(request):
+    index_sections = Index.objects.all()
+    latest_area = PracticeAreaMain.objects.last()
+    practice_area = PracticeService.objects.all()[:3]  # Only get first 3 areas
+    clients = Client.objects.all()
+    blog = Blog.objects.last()
+    blog_posts_list = BlogPost.objects.all().order_by('-created_at')
+    latest_client = Client.objects.last()
+    attorneys = Attorney.objects.all()
+    latest_info = AboutUs.objects.last()
+    legal_info = LegalAdviceInfo.objects.last()  # background image for Free Legal Advice section
+
+    # ✅ Handle form submission
+    if request.method == 'POST':
+        first_name = request.POST.get('fname')
+        last_name = request.POST.get('lname')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        # Save to database
+        FreeLegalAdvice.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            subject=subject,
+            message=message
+        )
+
+        messages.success(request, "✅ Your message has been sent successfully!")
+        return redirect('index')  # reload home page after submission
+
+    context = {
+        'index_sections': index_sections,
+        'main': latest_area,
+        'areas': practice_area,
+        'clients': clients,
+        'latest_info': latest_info,
+        'blog': blog,
+        'blog_content': blog_posts_list[:3],
+        'attorneys': attorneys, 
+        'latest_client': latest_client,
+        'legal_info': legal_info,  # send background image info
+    }
+
+    return render(request, 'ui/index.html', context)
+
+
+
 def about(request):
     latest_info = AboutUs.objects.last()
-    clients = Client.objects.all()  
-    latest_client = Client.objects.last()  
-
-    attorneys_info = AboutUs.objects.all().values(
-        'attorneys_name',
-        'attorney_dsescription',
-        'attorney_position',
-        'facebook_link',
-        'twitter_link',
-        'linkedin_link',
-        'instagram_link',
-        'attorney_image',
-    )
+    clients = Client.objects.all()
+    latest_client = Client.objects.last()
+    attorneys = Attorney.objects.all()  # ✅ Now using Attorney model
 
     return render(request, 'ui/about.html', {
         "latest_info": latest_info,
-        "attorneys_info": attorneys_info,
+        "attorneys": attorneys,
         "clients": clients,
-        "latest_client": latest_client
+        "latest_client": latest_client,
     })
+
+
+
 
 
 #main blog view 
@@ -73,10 +119,9 @@ def blog_single(request, id):
         )
         return redirect('blog_single', id=post.id) 
 
-    # Related blogs: 3 blogs excluding current post
+
     related_blogs = BlogPost.objects.exclude(id=post.id).order_by('-created_at')[:3]
 
-    # Recent blogs: last 3 posts
     recent_blogs = BlogPost.objects.exclude(id=post.id).order_by('-created_at')[:3]
 
     context = {
@@ -121,13 +166,12 @@ def contact(request):
 
 
 def gallery(request):
-    # Get the latest gallery
+
     gallery = Gallery.objects.last()
-    
-    # Get all images for that gallery
+
     all_images = GalleryImage.objects.filter(gallery=gallery).order_by('-id')
     
-    # Paginate: 6 images per page
+
     paginator = Paginator(all_images, 6)
     page_number = request.GET.get('page')
     images = paginator.get_page(page_number)
@@ -143,43 +187,31 @@ def gallery(request):
 def main(request):
     return render(request, 'ui/main.html')
 
-#practice page view
+
 from django.core.paginator import Paginator
 
 def practice(request):
-    latest_area = PracticeArea.objects.last() 
-    
-    if latest_area:
-        main_data = {
-            'main_title': latest_area.main_title,
-            'main_description': latest_area.main_description,
-            'main_image': latest_area.main_image,
-            'practice_area': latest_area.practice_area,
-            'practice_area_description': latest_area.practice_area_description
-        }
-    else:
-        main_data = None
+    latest_area = PracticeAreaMain.objects.last() 
+    practice_area = PracticeService.objects.all()
+    context = {
+        'main': latest_area,
+        'areas': practice_area,
+    }
 
-    all_areas_list = PracticeArea.objects.all()
-    paginator = Paginator(all_areas_list, 6)  # 6 cards per page
-    page_number = request.GET.get('page')
-    areas = paginator.get_page(page_number)
-
-    return render(request, 'ui/practice.html', {
-        'main': main_data,
-        'areas': areas
-    })
+    return render(request, 'ui/practice.html', context)
 
 
 
 def practice_area_detail(request, id):
-    area = get_object_or_404(PracticeArea, id=id)
-    all_areas = PracticeArea.objects.all()
-    other_areas = PracticeArea.objects.exclude(id=area.id).order_by('-id')[:3]
+    # Get the requested service
+    area = get_object_or_404(PracticeService, id=id)
+    
+    # Get 3 other services excluding the current one
+    other_areas = PracticeService.objects.exclude(id=area.id).order_by('-id')[:3]
 
     context = {
         'area': area,
-        'other_areas': other_areas,  
+        'other_areas': other_areas,
     }
     return render(request, 'ui/practice_area_detail.html', context)
 
@@ -194,7 +226,7 @@ def portfolio(request):
     portfolio_items_list = PortfolioItem.objects.all()
     clients = Client.objects.all() 
 
-    # Paginate: 6 items per page (change as needed)
+
     paginator = Paginator(portfolio_items_list, 6)
     page_number = request.GET.get('page')
     portfolio_items = paginator.get_page(page_number)
@@ -207,10 +239,10 @@ def portfolio(request):
     return render(request, 'ui/won.html', context)
 
 def portfolio_detail(request, id):
-    # Get the clicked portfolio item
+
     item = get_object_or_404(PortfolioItem, id=id)
 
-    # Other portfolio items (Related Cases)
+
     other_items = PortfolioItem.objects.exclude(id=id)
 
     context = {

@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/overrides.css' %}">
 
     <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
     <!--[if lt IE 9]>
@@ -47,18 +48,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-2">
-                        <div id="ftco-logo"><a href="{% url 'index' %}">Lawmaker</a></div>
+                        <div id="ftco-logo"><a href="{% url 'index' %}">{{ org_info.name }}</a></div>
                     </div>
                     <div class="col-md-10 text-right menu-1">
                         <ul>
-                            <li class="active"><a href="{% url 'index' %}">Home</a></li>
-							<li><a href="{% url 'about' %}">About</a></li>
-                            <li><a href="{% url 'practice' %}">Services</a></li>
-                            <li><a href="{% url 'blog_main'%}">Blog</a></li>
-                            <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
-                            <li><a href="{% url 'gallery' %}">Gallery</a></li>
-                            
-                            <li><a href="{% url 'contact' %}">Contact</a></li>
+                            <li class="{% if request.path == '/' %}active{% endif %}"><a href="{% url 'index' %}">Home</a></li>
+                            <li class="{% if request.path == '/about/' %}active{% endif %}"><a href="{% url 'about' %}">About</a></li>
+                            <li class="{% if request.path == '/practice/' %}active{% endif %}"><a href="{% url 'practice' %}">Services</a></li>
+                            <li class="{% if request.path == '/blog/' %}active{% endif %}"><a href="{% url 'blog_main'%}">Blog</a></li>
+                            <li class="{% if request.path == '/portfolio/' %}active{% endif %}"><a href="{% url 'portfolio' %}">Portfolio</a></li>
+                            <li class="{% if request.path == '/gallery/' %}active{% endif %}"><a href="{% url 'gallery' %}">Gallery</a></li>
+                            <li class="{% if request.path == '/contact/' %}active{% endif %}"><a href="{% url 'contact' %}">Contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -75,47 +75,60 @@
         <div class="container">
             <div class="row row-pb-md">
                 <div class="col-md-3 ftco-widget">
-                    <h4>Lawfirm</h4>
-                    <p>Far far away, behind the word mountains...</p>
+                    <h4>{{ org_info.name }}</h4>
+                    <p>{{ org_info.org_details }}</p>
                 </div>
                 <div class="col-md-3 col-md-push-1">
                     <h4>Navigation</h4>
                     <ul class="ftco-footer-links">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Practice Areas</a></li>
-                        <li><a href="#">Won Cases</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">About us</a></li>
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About us</a></li>
+                        <li><a href="{% url 'practice' %}">Our Services</a></li>
+                        <li><a href="{% url 'blog_main' %}">Blog</a></li>
+                        <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
+                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                        <li><a href="{% url 'contact' %}">Contact us</a></li>   
                     </ul>
                 </div>
                 <div class="col-md-3 col-md-push-1">
                     <h4>Contact Information</h4>
                     <ul class="ftco-footer-links">
-                        <li>198 West 21th Street, <br> Suite 721 New York NY 10016</li>
-                        <li><a href="tel://1234567920">+ 1235 2355 98</a></li>
-                        <li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+                        <li>{{ contact_info.address }}</li>
+                        <li><a href="tel://1234567920">{{ contact_info.phone }}</a></li>
+                        <li><a href="mailto:info@yoursite.com">{{ contact_info.email }}</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 col-md-push-1">
-                    <h4>Opening Hours</h4>
+                    <h4>Our Services </h4>
                     <ul class="ftco-footer-links">
-                        <li>Mon - Thu: 9:00 - 21 00</li>
-                        <li>Fri 8:00 - 21 00</li>
-                        <li>Sat 9:30 - 15: 00</li>
+                        <li>{{ org_info.service_1 }}</li>
+                        <li>{{ org_info.service_2 }}</li>
+                        <li>{{ org_info.service_3 }}</li>
+                        <li>{{ org_info.service_4 }}</li>
+                        <li>{{ org_info.service_5 }}</li>
                     </ul>
                 </div>
             </div>
             <div class="row copyright">
                 <div class="col-md-12 text-center">
-                    <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Template by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
-                    <p>
-                        <ul class="ftco-social-icons">
-                            <li><a href="#"><i class="icon-twitter"></i></a></li>
-                            <li><a href="#"><i class="icon-facebook"></i></a></li>
-                            <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                            <li><a href="#"><i class="icon-dribbble"></i></a></li>
-                        </ul>
-                    </p>
+                    <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made by <a href="https://www.kitwosd.com/" target="_blank">Kitwosd IT Support Center</a></p>
+<p>
+    <ul class="ftco-social-icons">
+        {% if org_info.twitter_link %}
+            <li><a href="{{ org_info.twitter_link }}" target="_blank"><i class="icon-twitter"></i></a></li>
+        {% endif %}
+        {% if org_info.facebook_link %}
+            <li><a href="{{ org_info.facebook_link }}" target="_blank"><i class="icon-facebook"></i></a></li>
+        {% endif %}
+        {% if org_info.linkedin_link %}
+            <li><a href="{{ org_info.linkedin_link }}" target="_blank"><i class="icon-linkedin"></i></a></li>
+        {% endif %}
+        {% if org_info.instagram_link %}
+            <li><a href="{{ org_info.instagram_link }}" target="_blank"><i class="icon-instagram"></i></a></li>
+        {% endif %}
+    </ul>
+</p>
+
                 </div>
             </div>
         </div>

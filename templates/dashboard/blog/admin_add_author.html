@@ -1,0 +1,24 @@
+{% extends 'dashboard/admin_base.html' %}
+{% block title %}Add Author{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h4 class="mb-3">Add New Author</h4>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label>Name</label>
+      <input type="text" name="name" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label>Bio</label>
+      <textarea name="bio" class="form-control" rows="4"></textarea>
+    </div>
+    <div class="mb-3">
+      <label>Profile Image</label>
+      <input type="file" name="profile_image" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-success">Add Author</button>
+    <a href="{% url 'admin_blog_dashboard' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

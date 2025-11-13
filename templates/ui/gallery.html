@@ -37,13 +37,15 @@
             </div>
         </div>
 
-        <!-- Gallery Images Grid -->
+        <!-- Gallery Grid -->
         <div class="row">
             {% for img in images %}
                 <div class="col-sm-6 col-md-4 col-lg-4 mb-4">
                     <div class="gallery-item-wrapper">
                         <a href="{{ img.image.url }}" class="image-popup">
-                            <img src="{{ img.image.url }}" alt="{{ gallery.title }} Image" class="img-fluid rounded shadow-sm gallery-hover" style="width:100%; height:250px; object-fit:cover;">
+                            <img src="{{ img.image.url }}" alt="{{ gallery.title }} Image" 
+                                 class="img-fluid rounded shadow-sm gallery-hover" 
+                                 style="width:100%; height:250px; object-fit:cover;">
                         </a>
                     </div>
                 </div>
@@ -52,80 +54,31 @@
             {% endfor %}
         </div>
 
-     <div class="row mt-5 mb-5">
-    <div class="col-md-12 d-flex justify-content-center">
-        <nav aria-label="Gallery pagination">
-            <ul class="pagination pagination-lg">
+        <!-- Pagination -->
+        {% if images.paginator.num_pages > 1 %}
+        <div class="row mt-5 mb-4">  <!-- added larger top margin -->
+            <div class="col text-center">
                 {% if images.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ images.previous_page_number }}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                {% else %}
-                    <li class="page-item disabled">
-                        <span class="page-link" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </span>
-                    </li>
+                    <a href="?page={{ images.previous_page_number }}" class="btn btn-outline-primary btn-sm mx-1">Previous</a>
                 {% endif %}
-
+                
                 {% for num in images.paginator.page_range %}
                     {% if images.number == num %}
-                        <li class="page-item active">
-                            <span class="page-link">
-                                {{ num }}
-                                <span class="sr-only">(current)</span>
-                            </span>
-                        </li>
+                        <span class="btn btn-primary btn-sm mx-1 disabled">{{ num }}</span>
                     {% else %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-                        </li>
+                        <a href="?page={{ num }}" class="btn btn-outline-primary btn-sm mx-1">{{ num }}</a>
                     {% endif %}
                 {% endfor %}
-
+                
                 {% if images.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ images.next_page_number }}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                {% else %}
-                    <li class="page-item disabled">
-                        <span class="page-link" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </span>
-                    </li>
+                    <a href="?page={{ images.next_page_number }}" class="btn btn-outline-primary btn-sm mx-1">Next</a>
                 {% endif %}
-            </ul>
-        </nav>
-    </div>
-</div>
-
-
-    </div>
-</div>
-
-<!-- Intro Section -->
-<div id="intro-bg">
-    <div class="container">
-        <div id="ftco-intro" style="position: relative; margin-bottom: -150px!important;">
-            <div class="third-col">
-                <h2 class="h3">Need Legal Services?</h2>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-            </div>
-            <div class="third-col third-col-color">
-                <h2 class="h3">Call now (+1) 123-456-7890</h2>
-                <p>Email us at <a href="#" target="_blank">info@yourwebsite.com</a></p>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
+
+
 
 {% endblock %}

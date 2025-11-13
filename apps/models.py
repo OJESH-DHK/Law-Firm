@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+from ckeditor.fields import RichTextField
 
 class ContactInfo(models.Model):
     address = models.TextField()
@@ -81,21 +83,42 @@ class Client(models.Model):
     def __str__(self):
         return self.client_name
 
-# apps/models.py
-from django.db import models
 
-class PracticeArea(models.Model):
+class PracticeAreaMain(models.Model):
     main_title = models.CharField(max_length=200, default="Practice Areas")
     main_description = models.TextField()
-    main_image = models.ImageField(upload_to='practice_area_images/')
+    main_image = models.ImageField(upload_to='practice_area_images/', blank=True, null=True)
     practice_area = models.CharField(max_length=100)
     practice_area_description = models.TextField()
+
+    def __str__(self):
+        return self.main_title
+
+
+class PracticeService(models.Model):
+    main_section = models.ForeignKey(PracticeAreaMain, on_delete=models.CASCADE, related_name="services",blank=True, null=True)
     name = models.CharField(max_length=100)
-    description = models.TextField()
-    icon_image = models.ImageField(upload_to='practice_icons/')
+    description = RichTextField()
+    icon_image = models.ImageField(upload_to='practice_icons/', blank=True, null=True)
 
     def __str__(self):
         return self.name
+
+
+    
+class Attorney(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    position = models.CharField(max_length=200, blank=True, null=True)
+    facebook_link = models.URLField(blank=True, null=True)
+    twitter_link = models.URLField(blank=True, null=True)
+    linkedin_link = models.URLField(blank=True, null=True)
+    instagram_link = models.URLField(blank=True, null=True)
+    image = models.ImageField(upload_to='attorney_images/', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
 
 class PortfolioMain(models.Model):
     title = models.CharField(max_length=200, default="Our Portfolio")
@@ -107,7 +130,7 @@ class PortfolioMain(models.Model):
 class PortfolioItem(models.Model):
     item_image = models.ImageField(upload_to='portfolio_items/')
     item_title = models.CharField(max_length=200)
-    item_description = models.TextField()
+    item_description = RichTextField()
 
     def __str__(self):
         return self.item_title
@@ -131,13 +154,11 @@ class Author(models.Model):
         return self.name
 
 
-# models.py
-from django.db import models
-from django.utils import timezone
+
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=200)
-    content = models.TextField()
+    content = RichTextField()
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, blank=True)
@@ -156,6 +177,58 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.name}"
+
+class Index(models.Model):
+    header = models.CharField(max_length=200, default="Welcome to Our Law Firm")
+    sub_header = models.TextField()
+    second_header = models.CharField(max_length=200, blank=True, null=True)
+    second_sub_header = models.TextField(blank=True, null=True)
+    second_image = models.ImageField(upload_to='index_images/', blank=True, null=True)
+
+    def __str__(self):
+        return self.header
+
+class IndexBackgroundImage(models.Model):
+    index = models.ForeignKey(Index, on_delete=models.CASCADE, related_name='background_images')
+    image = models.ImageField(upload_to='index_images/')
+
+class FreeLegalAdvice(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    subject = models.CharField(max_length=200)
+    message = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.subject}"
+
+
+class LegalAdviceInfo(models.Model):
+    image = models.ImageField(upload_to='legal_advice_images/')
+
+    def __str__(self):
+        return f"Legal Advice Image {self.id}"
+    
+class OrganizationInfo(models.Model):
+    name = models.CharField(max_length=200)
+    org_details = models.TextField()
+    service_1 = models.CharField(max_length=200)
+    service_2 = models.CharField(max_length=200)
+    service_3 = models.CharField(max_length=200)
+    service_4 = models.CharField(max_length=200)
+    service_5 = models.CharField(max_length=200)
+    facebook_link = models.URLField(blank=True, null=True)
+    twitter_link = models.URLField(blank=True, null=True)
+    linkedin_link = models.URLField(blank=True, null=True)
+    instagram_link = models.URLField(blank=True, null=True)
+    org_logo = models.ImageField(upload_to='organization_logos/')
+
+    def __str__(self):
+        return self.name
+
+    
+
 
 
 

@@ -568,15 +568,41 @@ h1, h2, h3, h4, h5, h6, figure {
       font-size: 60px;
       line-height: 40px;
       color: #3f52e3; }
-  .services:hover, .services:focus {
-    background: #3f52e3;
-    color: rgba(255, 255, 255, 0.7); }
-    .services:hover h3 a, .services:focus h3 a {
-      color: #fff; }
-    .services:hover .icon i, .services:focus .icon i {
-      color: #fff; }
-    .services:hover strong, .services:focus strong {
-      color: #fff; }
+  /* ===== Service Card (No Hover Effect) ===== */
+.services {
+  background: #fff;
+  color: #333;
+  transition: none;
+  box-shadow: none;
+}
+
+/* Remove hover and focus effects completely */
+.services:hover,
+.services:focus {
+  background: #fff;
+  color: #333;
+  box-shadow: none;
+}
+
+/* Ensure inner elements also remain normal */
+.services h3 a,
+.services strong,
+.services .icon i,
+.services p {
+  color: #333;
+}
+
+.services:hover h3 a,
+.services:focus h3 a,
+.services:hover strong,
+.services:focus strong,
+.services:hover .icon i,
+.services:focus .icon i,
+.services:hover p,
+.services:focus p {
+  color: #333;
+}
+
 
 .ftco-social-icons {
   margin: 0;
